@@ -9,21 +9,23 @@ mkdir -p /etc/mikbill/
 mkdir -p /var/lib/mysql/
 mkdir -p /var/log/mikbill/
 mkdir -p /etc/mikbill/conf.d/ssl
+mkdir -p /etc/mikbill/install
 }
 WGET (){
 #Nginx
-wget -P /etc/mikbill/conf.d https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/00_stat_zaglushka_vhost.conf
-wget -P /etc/mikbill/conf.d https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/admin_vhost.conf
-wget -P /etc/mikbill/conf.d https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/map_vhost.conf
-wget -P /etc/mikbill/conf.d https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/stat_vhost.conf
-wget -P /etc/mikbill/conf.d/ssl https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.crt
-wget -P /etc/mikbill/conf.d/ssl https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.key
-wget -P /etc/mikbill/ https://raw.githubusercontent.com/mikbill/distr/master/nginx/nginx.conf
+wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/00_stat_zaglushka_vhost.conf -O /etc/mikbill/conf.d/00_stat_zaglushka_vhost.conf
+wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/admin_vhost.conf -O /etc/mikbill/conf.d/admin_vhost.conf
+wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/map_vhost.conf -O /etc/mikbill/conf.d/map_vhost.conf
+wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/stat_vhost.conf -O /etc/mikbill/conf.d/stat_vhost.conf
+wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.crt -O /etc/mikbill/conf.d/ssl/ca.crt
+wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.key -O /etc/mikbill/conf.d/ssl/ca.key
+wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/nginx.conf -O /etc/mikbill/nginx.conf
 #MySQL
-wget -P /var/lib/mysql/ https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_5.5.sql
-wget -P /var/lib/mysql/ https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_2_0_6_utf8.sql
-wget -P /etc/mikbill/ https://raw.githubusercontent.com/mikbill/distr/master/mysql/my.cnf
-wget -P /etc/mikbill/ https://raw.githubusercontent.com/mikbill/distr/master/mysql/my-mikbill.cnf
+wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_2_0_6_utf8.sql -O /etc/mikbill/install/mikbill_2_0_6_utf8.sql
+wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_5.5.sql -O /etc/mikbill/install/mikbill_5.5.sql 
+wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/my.cnf -O /etc/mikbill/install/my.cnf
+wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/my-mikbill.cnf -O /etc/mikbill/install/my-mikbill.cnf
+wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/base_install.sh -O /etc/mikbill/install/base_install.sh
 }
 NGINX (){
 docker rm -f nginx
@@ -31,18 +33,27 @@ docker run -p 80:80 -p 443:443 --name nginx -v /etc/mikbill/nginx.conf:/etc/ngin
 }
 MYSQL (){
 docker rm -f mysql
+rm -R /var/lib/mysql
+mkdir -p /var/lib/mysql
+rm -f /etc/mikbill/my.cnf
+cp /etc/mikbill/install/my.cnf /etc/mikbill/my.cnf
+cp /etc/mikbill/install/mikbill_2_0_6_utf8.sql /var/lib/mysql/mikbill_2_0_6_utf8.sql 
+
 docker run -p 3306:3306 -v /etc/mikbill/my.cnf:/etc/mysql/conf.d/my.cnf -v /var/lib/mysql:/var/lib/mysql  --name mysql -e MYSQL_ROOT_PASSWORD=$mysql_root_passwd -d mysql:5.5
-sed -e "s/MIKBILLPASS/$mysql_mikbill_passwd/g" /var/lib/mysql/mikbill_5.5.sql > /var/lib/mysql/mikbill_5.5.sql2
-#Install base
-echo "#!/bin/bash" > /var/lib/mysql/base_install.sh
-echo "mysql -uroot -p$mysql_root_passwd < /var/lib/mysql/mikbill_5.5.sql2" >> /var/lib/mysql/base_install.sh
-echo "mysql -uroot -p$mysql_root_passwd mikbill < /var/lib/mysql/mikbill_2_0_6_utf8.sql" >> /var/lib/mysql/base_install.sh
+sed -e "s/MIKBILLPASS/$mysql_mikbill_passwd/g" /etc/mikbill/install/mikbill_5.5.sql > /var/lib/mysql/mikbill_5.5.sql
+sed -e "s/ROOTPASS/$mysql_root_passwd/g" /etc/mikbill/install/base_install.sh > /var/lib/mysql/base_install.sh
 chmod +x /var/lib/mysql/base_install.sh
-}
-MYSQL_INSTALL_BASE (){
-echo "Скопировать и выполнить:"
-echo "/var/lib/mysql/base_install.sh"
-docker exec -it mysql bash
+
+sleep 40
+docker exec mysql /var/lib/mysql/base_install.sh
+
+docker stop mysql
+rm -f /etc/mikbill/my.cnf
+cp /etc/mikbill/install/my-mikbill.cnf /etc/mikbill/my.cnf
+rm -f var/lib/mysql/ib_logfile0
+rm -f var/lib/mysql/ib_logfile1
+rm -f var/lib/mysql/ibdata1
+docker start mysql
 }
 #MIKBILL_PHP-FPM (){
 
@@ -58,5 +69,5 @@ INSTALL_CLEAR (){
 rm -f /var/lib/mysql/base_install.sh
 rm -f /var/lib/mysql/mikbill_2_0_6_utf8.sql
 rm -f /var/lib/mysql/mikbill_5.5.sql
-rm -f /var/lib/mysql/mikbill_5.5.sql2
+rm -f /etc/mikbill/install
 }
