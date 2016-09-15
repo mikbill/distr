@@ -36,16 +36,16 @@ docker rm -f mysql
 rm -R /var/lib/mysql
 mkdir -p /var/lib/mysql
 rm -f /etc/mikbill/my.cnf
+rm /var/lib/mysql/mikbill_2_0_6_utf8.sql
 cp /etc/mikbill/install/my.cnf /etc/mikbill/my.cnf
 cp /etc/mikbill/install/mikbill_2_0_6_utf8.sql /var/lib/mysql/mikbill_2_0_6_utf8.sql 
 
 docker run -p 3306:3306 -v /etc/mikbill/my.cnf:/etc/mysql/conf.d/my.cnf -v /var/lib/mysql:/var/lib/mysql  --name mysql -e MYSQL_ROOT_PASSWORD=$mysql_root_passwd -d mysql:5.5
 sed -e "s/MIKBILLPASS/$mysql_mikbill_passwd/g" /etc/mikbill/install/mikbill_5.5.sql > /var/lib/mysql/mikbill_5.5.sql
-sed -e "s/ROOTPASS/$mysql_root_passwd/g" /etc/mikbill/install/base_install.sh > /var/lib/mysql/base_install.sh
-chmod +x /var/lib/mysql/base_install.sh
 
 sleep 40
-docker exec mysql /var/lib/mysql/base_install.sh
+docker exec mysql -uroot -p$mysql_root_passwd < /var/lib/mysql/mikbill_5.5.sql
+docker exec mysql -uroot -p$mysql_root_passwd mikbill < /var/lib/mysql/mikbill_2_0_6_utf8.sql
 
 docker stop mysql
 rm -f /etc/mikbill/my.cnf
