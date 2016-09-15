@@ -22,7 +22,7 @@ symbolic-links=0
 skip-name-resolve
 
 #system
-language = /usr/share/mysql/english
+language = /usr/local/mysql/share/english/errmsg.sys
 loose-local-infile=1
 query_cache_size = 256M
 query_cache_limit = 256M
