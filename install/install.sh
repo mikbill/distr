@@ -1,6 +1,6 @@
 #!/bin/bash
-mysql_root_passwd="passwd321"
-mysql_mikbill_passwd="passwd444"
+mysql_root_passwd="passwd"
+mysql_mikbill_passwd="passwd"
 HOME_DIR=$(cd $(dirname $0)&& pwd)
 source $HOME_DIR/install.lib
 
