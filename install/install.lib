@@ -7,7 +7,6 @@ rm -R /var/log/mikbill/
 MKDIR (){
 mkdir -p /etc/mikbill/
 mkdir -p /var/lib/mysql/
-mkdir -p /var/log/mikbill/
 mkdir -p /etc/mikbill/conf.d/ssl
 mkdir -p /etc/mikbill/install
 mkdir -p /var/www/mikbill
@@ -35,7 +34,9 @@ mkdir -p /var/log/nginx
 docker run -p 80:80 -p 443:443 --name nginx -v /etc/mikbill/nginx.conf:/etc/nginx/nginx.conf \
                                             -v /etc/mikbill/conf.d:/etc/nginx/conf.d \
                                             -v /var/www/mikbill:/var/www/mikbill \
-                                            -v /var/log/nginx:/var/log/nginx -d nginx
+                                            -v /var/log/nginx:/var/log/nginx \
+                                            -v /var/run/php-worker-socket:/var/run/php-worker-socket \
+                                            -d nginx
 }
 MYSQL (){
 docker rm -f mysql
@@ -46,7 +47,9 @@ rm /var/lib/mysql/mikbill_2_0_6_utf8.sql
 cp /etc/mikbill/install/my.cnf /etc/mikbill/my.cnf
 cp /etc/mikbill/install/mikbill_2_0_6_utf8.sql /var/lib/mysql/mikbill_2_0_6_utf8.sql 
 
-docker run -p 3306:3306 -v /etc/mikbill/my.cnf:/etc/mysql/conf.d/my.cnf -v /var/lib/mysql:/var/lib/mysql  --name mysql -e MYSQL_ROOT_PASSWORD=$mysql_root_passwd -d mysql:5.5
+docker run -p 3306:3306 -v /etc/mikbill/my.cnf:/etc/mysql/conf.d/my.cnf \
+                        -v /var/lib/mysql:/var/lib/mysql \
+                        --name mysql -e MYSQL_ROOT_PASSWORD=$mysql_root_passwd -d mysql:5.5
 sed -e "s/MIKBILLPASS/$mysql_mikbill_passwd/g" /etc/mikbill/install/mikbill_5.5.sql > /var/lib/mysql/mikbill_5.5.sql
 
 sleep 20
