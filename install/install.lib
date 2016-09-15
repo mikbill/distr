@@ -50,9 +50,9 @@ docker exec mysql sh -c "exec mysql -uroot -p$mysql_root_passwd mikbill < /var/l
 docker stop mysql
 rm -f /etc/mikbill/my.cnf
 cp /etc/mikbill/install/my-mikbill.cnf /etc/mikbill/my.cnf
-rm -f var/lib/mysql/ib_logfile0
-rm -f var/lib/mysql/ib_logfile1
-rm -f var/lib/mysql/ibdata1
+rm -f /var/lib/mysql/ib_logfile0
+rm -f /var/lib/mysql/ib_logfile1
+rm -f /var/lib/mysql/ibdata1
 docker start mysql
 }
 #MIKBILL_PHP-FPM (){
