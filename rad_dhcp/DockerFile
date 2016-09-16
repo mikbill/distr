@@ -1,5 +1,5 @@
 From centos:6.8
-RUN yum update && \
+RUN yum update -y && \
 yum install -y  mysql-libs postgresql-libs unixODBC libpcap perl-DBI && \
 yum clean all && \
 rpm -ihv https://github.com/mikbill/distr/blob/master/rad_dhcp/radius_rpm/freeradius-2.2.6-1.el6.x86_64.rpm?raw=true && \
