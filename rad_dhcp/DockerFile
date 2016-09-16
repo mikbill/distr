@@ -6,11 +6,9 @@ yum install unixODBC -y && \
 yum install libpcap -y && \
 yum install perl-DBI -y && \
 yum clean all && \
-
 rpm -ihv https://github.com/mikbill/distr/blob/master/rad_dhcp/radius_rpm/freeradius-2.2.6-1.el6.x86_64.rpm?raw=true && \
 rpm -ihv https://github.com/mikbill/distr/blob/master/rad_dhcp/radius_rpm/freeradius-mysql-2.2.6-1.el6.x86_64.rpm?raw=true && \
 rpm -ihv https://github.com/mikbill/distr/blob/master/rad_dhcp/radius_rpm/freeradius-perl-2.2.6-1.el6.x86_64.rpm?raw=true && \
 rpm -ihv https://github.com/mikbill/distr/blob/master/rad_dhcp/radius_rpm/freeradius-utils-2.2.6-1.el6.x86_64.rpm?raw=true
-
 EXPOSE 1812 1813 67 68 2007
 
