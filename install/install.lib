@@ -60,8 +60,8 @@ docker start mysql
 #MIKBILL_PHP-FPM (){
 
 #}
-#RAD_DHCP (){
-
+RAD_DHCP (){
+docker run -p 1812:1812 -p 1813:1813 -p 67:67 -p 68:68 --name rad_dhcp
 #}
 DOCKER_CLEAR (){
 docker rm -f $(docker ps -a -q)
