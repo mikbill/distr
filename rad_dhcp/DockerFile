@@ -1,10 +1,6 @@
 From centos:6.8
-RUN yum update -y && \
-yum install mysql-libs -y && \
-yum install postgresql-libs -y && \
-yum install unixODBC -y && \
-yum install libpcap -y && \
-yum install perl-DBI -y && \
+RUN yum update && \
+yum install -y  mysql-libs postgresql-libs unixODBC libpcap perl-DBI && \
 yum clean all && \
 rpm -ihv https://github.com/mikbill/distr/blob/master/rad_dhcp/radius_rpm/freeradius-2.2.6-1.el6.x86_64.rpm?raw=true && \
 rpm -ihv https://github.com/mikbill/distr/blob/master/rad_dhcp/radius_rpm/freeradius-mysql-2.2.6-1.el6.x86_64.rpm?raw=true && \
