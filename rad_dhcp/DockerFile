@@ -11,11 +11,6 @@ rpm -ihv https://github.com/mikbill/distr/blob/master/rad_dhcp/radius_rpm/freera
 rpm -ihv https://github.com/mikbill/distr/blob/master/rad_dhcp/radius_rpm/freeradius-mysql-2.2.6-1.el6.x86_64.rpm?raw=true && \
 rpm -ihv https://github.com/mikbill/distr/blob/master/rad_dhcp/radius_rpm/freeradius-perl-2.2.6-1.el6.x86_64.rpm?raw=true && \
 rpm -ihv https://github.com/mikbill/distr/blob/master/rad_dhcp/radius_rpm/freeradius-utils-2.2.6-1.el6.x86_64.rpm?raw=true && \ 
-#Alternative
-#rpm -ihv http://194.125.224.7/6/x86_64/freeradius-2.2.6-1.el6.x86_64.rpm && \
-#rpm -ihv http://194.125.224.7/6/x86_64/freeradius-mysql-2.2.6-1.el6.x86_64.rpm && \
-#rpm -ihv http://194.125.224.7/6/x86_64/freeradius-perl-2.2.6-1.el6.x86_64.rpm && \
-#rpm -ihv http://194.125.224.7/6/x86_64/freeradius-utils-2.2.6-1.el6.x86_64.rpm && \
 
 EXPOSE 1812 1813 67 68 2007
 
