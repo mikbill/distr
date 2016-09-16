@@ -12,12 +12,19 @@ mkdir $dir_install
 wget https://raw.githubusercontent.com/mikbill/distr/master/install/install.lib -O $dir_install/install.lib
 source $dir_install/install.lib
 
+# Очистка каталогов
 RM_MIKBILL
+# Удаление всех образов и контейнеров в системе
 #DOCKER_CLEAR
-
+# Создание каталогов
 MKDIR
+# Загрузка всех файлов
 WGET
+# Установка контейнера Nginx
 NGINX
+# Установка контейнера MySQL
 MYSQL
+# Установка контейнера Mikbill
 #MIKBILL_PHP-FPM
+# Установка контейнера Radius_DHCP
 #RAD_DHCP
