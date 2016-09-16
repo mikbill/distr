@@ -4,7 +4,7 @@ mysql_mikbill_passwd="passwd"
 
 dir_install="/tmp/install"
 dir_config="/etc/mikbill"
-dir_base="var/lib/mysql"
+dir_base="/var/lib/mysql"
 dir_log_nginx="/var/log/nginx"
 dir_mikbill="/var/www/mikbill"
 
