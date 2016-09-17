@@ -62,8 +62,17 @@ docker start mysql
 }
 
 MIKBILL (){
-docker run -p 1812:1812 -p 1813:1813 -p 67:67 -p 68:68 --name rad_dhcp
-#}
+mkdir -p $dir_mikbill/log
+docker run -p 1812:1812 -p 1813:1813 -p 67:67 -p 68:68 -p 2007:2007 --name mikbill -d mikbill/mikbill \
+          -v $dir_mikbill_www:/var/www/mikbill \
+          -v $dir_mikbill/www.conf:/etc/php-fpm.d/www.conf \
+          -v $dir_mikbill/crontab:/etc/crontab \
+          -v $dir_mikbill/sudoers:/etc/sudoers \
+          -v $dir_mikbill/log/:/var/log/ \
+          -v $dir_mikbill/radiusd.conf:/etc/raddb/radiusd.conf \
+          -v $dir_mikbill/sql.conf:/etc/raddb/sql.conf \
+          -v $dir_mikbill/dictionary:/usr/share/freeradius
+}
 DOCKER_CLEAR (){
 docker rm -f $(docker ps -a -q)
 docker rmi -f $(docker images -q)
