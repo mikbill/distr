@@ -22,7 +22,7 @@ source $dir_install/install.lib
 # Создание каталогов
 MKDIR
 # Загрузка всех файлов
-WGET
+DOWNLOAD
 # Установка контейнера Nginx
 NGINX
 # Установка контейнера MySQL
