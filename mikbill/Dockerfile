@@ -1,5 +1,5 @@
 From centos:6.8
-RUN update -y && \
+RUN yum update -y && \
 yum install -y  wget \
                 http://194.125.224.7/6/x86_64/perl-PHP-Serialization-0.34-6.el6.art.noarch.rpm \
                 http://194.125.224.7/6/x86_64/mikbill-freeradius-2.2.6-1.el6.x86_64.rpm \
