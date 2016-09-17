@@ -1,26 +1,4 @@
 #!/bin/bash
-Github-downloader (){
-GHDOMAIN="https://github.com/"
-IN="$tmp_url"
-IN=${IN##$GHDOMAIN}
-BRANCH="trunk"
-FOLDER="$tmp_folder"
-IFS="/" read -a SECT <<< "$IN".
-
-if [[ "${SECT[3]}" != "master" ]]; then
-  BRANCH=${SECT[3]}
-fi
-for index in "${!SECT[@]}"; do
-  if [ $index -gt 3 ]; then
-    FOLDER=$FOLDER/${SECT[index]}
-  fi
-done
-
-# DOMAIN/USER/PROJECT/<TRUNK||BRANCH>/FOLDER
-echo Exporting $GHDOMAIN${SECT[0]}/${SECT[1]}/$BRANCH$FOLDER
-svn export $GHDOMAIN${SECT[0]}/${SECT[1]}/$BRANCH$FOLDER
-}
-
 Download_mikbill (){
 mkdir -p $dir_install
 #Host
@@ -31,9 +9,7 @@ wget https://raw.githubusercontent.com/mikbill/distr/master/mikbill/www.conf -O 
 wget https://github.com/mikbill/distr/raw/master/mikbill/crontab -O $dir_mikbill/crontab
 wget https://github.com/mikbill/distr/raw/master/mikbill/radiusd.conf -O $dir_mikbill/radiusd.conf
 wget https://github.com/mikbill/distr/raw/master/mikbill/sql.conf -O $dir_mikbill/sql.conf
-tmp_url=https://github.com/mikbill/distr/tree/master/mikbill/dictonary
-tmp_folder=$dir_mikbill
-Github-downloader
+svn export https://github.com/mikbill/distr/trunk/mikbill/dictonary
 }
 
 Download_nginx (){
