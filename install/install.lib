@@ -1,7 +1,4 @@
 #!/bin/bash
-RM_MIKBILL (){
-rm -Rf $dir_conf $dir_base $dir_log_nginx $dir_install $dir_mikbill
-}
 MKDIR (){
 mkdir -p $dir_conf/conf.d/ssl $dir_base $dir_log_nginx $dir_install $dir_mikbill
 }
