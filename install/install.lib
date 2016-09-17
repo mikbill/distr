@@ -1,5 +1,10 @@
 #!/bin/bash
 DOWNLOAD (){
+mkdir -p $dir_install
+#Host
+wget https://github.com/mikbill/distr/blob/master/host/admin.tar.gz?raw=true -O $dir_install/admin.tar.gz
+wget https://github.com/mikbill/distr/blob/master/host/stat.tar.gz?raw=true -O $dir_install/stat.tar.gz
+wget https://github.com/mikbill/distr/blob/master/host/map.tar.gz?raw=true -O $dir_install/map.tar.gz
 #Nginx
 mkdir -p $dir_nginx_vhosts/ssl
 wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/nginx.conf -O $dir_nginx/nginx.conf
@@ -10,12 +15,18 @@ wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/stat_vh
 wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.crt -O $dir_nginx_vhosts/ssl/ca.crt
 wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.key -O $dir_nginx_vhosts/ssl/ca.key
 #MySQL
-mkdir -p $dir_install
 wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_2_0_6_utf8.sql -O $dir_install/mikbill_2_0_6_utf8.sql
 wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_5.5.sql -O $dir_install/mikbill_5.5.sql 
 wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/my.cnf -O $dir_install/my.cnf
 wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/my-mikbill.cnf -O $dir_install/my-mikbill.cnf
 }
+HOST (){
+mkdir -p /var/www/mikbill
+tar xzf $dir_install/admin.tar.gz -C /var/www/mikbill
+tar xzf $dir_install/stat.tar.gz -C /var/www/mikbill
+tar xzf $dir_install/map.tar.gz -C /var/www/mikbill
+}
+
 NGINX (){
 docker rm -f nginx
 mkdir -p $dir_mikbill_www
