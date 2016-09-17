@@ -2,11 +2,12 @@
 mysql_root_passwd="passwd"
 mysql_mikbill_passwd="passwd"
 
-dir_install="/tmp/install"
-dir_config="/etc/mikbill"
-dir_base="/var/lib/mysql"
-dir_log_nginx="/var/log/nginx"
-dir_mikbill="/var/www/mikbill"
+dir_root="/opt/mikbill"
+dir_install="$dir_root/install"
+dir_conf="$dir_root/conf"
+dir_base="$dir_root/base"
+dir_log_nginx="$dir_root/log/nginx"
+dir_mikbill="$dir_root/www"
 
 mkdir $dir_install
 wget https://raw.githubusercontent.com/mikbill/distr/master/install/install.lib -O $dir_install/install.lib
