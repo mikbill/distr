@@ -7,7 +7,7 @@ dir_install="$dir_root/install"
 dir_conf="$dir_root/conf"
 dir_base="$dir_root/base"
 dir_log_nginx="$dir_root/log/nginx"
-dir_mikbill="$dir_root/www"
+dir_www="$dir_root/www"
 
 mkdir $dir_install
 wget https://raw.githubusercontent.com/mikbill/distr/master/install/install.lib -O $dir_install/install.lib
