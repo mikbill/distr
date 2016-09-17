@@ -21,7 +21,7 @@ echo Exporting $GHDOMAIN${SECT[0]}/${SECT[1]}/$BRANCH$FOLDER
 svn export $GHDOMAIN${SECT[0]}/${SECT[1]}/$BRANCH$FOLDER
 }
 
-DOWNLOAD (){
+Download_mikbill (){
 mkdir -p $dir_install
 #Host
 wget https://github.com/mikbill/distr/blob/master/host/admin.tar.gz?raw=true -O $dir_install/admin.tar.gz
@@ -34,7 +34,9 @@ wget https://github.com/mikbill/distr/raw/master/mikbill/sql.conf -O $dir_mikbil
 tmp_url=https://github.com/mikbill/distr/tree/master/mikbill/dictonary
 tmp_folder=$dir_mikbill
 Github-downloader
-#Nginx
+}
+
+Download_nginx (){
 mkdir -p $dir_nginx_vhosts/ssl
 wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/nginx.conf -O $dir_nginx/nginx.conf
 wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/00_stat_zaglushka_vhost.conf -O $dir_nginx_vhosts/00_stat_zaglushka_vhost.conf
@@ -43,12 +45,15 @@ wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/map_vho
 wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/stat_vhost.conf -O $dir_nginx_vhosts/stat_vhost.conf
 wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.crt -O $dir_nginx_vhosts/ssl/ca.crt
 wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.key -O $dir_nginx_vhosts/ssl/ca.key
-#MySQL
+}
+
+Download_MySQL (){
 wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_2_0_6_utf8.sql -O $dir_install/mikbill_2_0_6_utf8.sql
 wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_5.5.sql -O $dir_install/mikbill_5.5.sql 
 wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/my.cnf -O $dir_install/my.cnf
 wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/my-mikbill.cnf -O $dir_install/my-mikbill.cnf
 }
+
 HOST (){
 mkdir -p /var/www/mikbill
 tar xzf $dir_install/admin.tar.gz -C /var/www/mikbill
