@@ -1,5 +1,5 @@
 #!/bin/bash
-Gidhub-downloader (){
+Github-downloader (){
 GHDOMAIN="https://github.com/"
 IN="$tmp_url"
 IN=${IN##$GHDOMAIN}
@@ -33,7 +33,7 @@ wget https://github.com/mikbill/distr/raw/master/mikbill/radiusd.conf -O $dir_mi
 wget https://github.com/mikbill/distr/raw/master/mikbill/sql.conf -O $dir_mikbill/sql.conf
 tmp_url=https://github.com/mikbill/distr/tree/master/mikbill/dictonary
 tmp_folder=$dir_mikbill
-Githab-downloader
+Github-downloader
 #Nginx
 mkdir -p $dir_nginx_vhosts/ssl
 wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/nginx.conf -O $dir_nginx/nginx.conf
