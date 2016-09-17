@@ -28,6 +28,5 @@ NGINX
 # Установка контейнера MySQL
 MYSQL
 # Установка контейнера Mikbill
-#MIKBILL_PHP-FPM
-# Установка контейнера Radius_DHCP
-#RAD_DHCP
+#MIKBILL
+
