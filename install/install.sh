@@ -30,3 +30,4 @@ MYSQL
 # Установка контейнера Mikbill
 #MIKBILL
 
+docker ps
