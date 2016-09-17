@@ -1,7 +1,6 @@
 #!/bin/bash
 Download_mikbill (){
-mkdir -p $dir_install
-#Host
+mkdir -p $dir_install $dir_mikbill/dictionary
 wget https://github.com/mikbill/distr/blob/master/host/admin.tar.gz?raw=true -O $dir_install/admin.tar.gz
 wget https://github.com/mikbill/distr/blob/master/host/stat.tar.gz?raw=true -O $dir_install/stat.tar.gz
 wget https://github.com/mikbill/distr/blob/master/host/map.tar.gz?raw=true -O $dir_install/map.tar.gz
@@ -9,7 +8,12 @@ wget https://raw.githubusercontent.com/mikbill/distr/master/mikbill/www.conf -O 
 wget https://github.com/mikbill/distr/raw/master/mikbill/crontab -O $dir_mikbill/crontab
 wget https://github.com/mikbill/distr/raw/master/mikbill/radiusd.conf -O $dir_mikbill/radiusd.conf
 wget https://github.com/mikbill/distr/raw/master/mikbill/sql.conf -O $dir_mikbill/sql.conf
-svn export https://github.com/mikbill/distr/trunk/mikbill/dictonary
+
+wget https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary -O $dir_mikbill/dictionary/dictionary
+wget https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.dhcp -O $dir_mikbill/dictionary/dictionary.dhcp
+wget https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.dlink -O $dir_mikbill/dictionary/dictionary.dlink
+wget https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.mikrotik -O $dir_mikbill/dictionary/dictionary.mikrotik
+wget https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.mpd -O $dir_mikbill/dictionary/dictionary.mpd
 }
 
 Download_nginx (){
