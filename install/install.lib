@@ -99,3 +99,12 @@ rm -f $dir_base/mikbill_2_0_6_utf8.sql
 rm -f $dir_base/mikbill_5.5.sql
 rm -Rf $dir_install
 }
+# Установка docker
+install_docker (){
+if [ "$(rpm -qa |grep docker)" = "" ] ; then {
+  curl -sSL https://get.docker.com/ | sh 
+  /etc/init.d/docker start
+    } 
+  fi  
+  }
+}
