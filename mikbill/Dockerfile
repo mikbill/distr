@@ -2,6 +2,7 @@ From centos:6.8
 LABEL version="0.1" \
       name="Mikbill image"
 RUN mkdir -p /usr/local/zend /var/www/mikbill && \
+useradd nginx && \
 yum update -y && \
 yum install -y  wget crontabs && \
 wget https://github.com/mikbill/distr/raw/master/mikbill/sudoers -O /etc/sudoers && \
