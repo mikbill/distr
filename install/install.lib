@@ -34,14 +34,6 @@ wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/my.cnf -O $dir
 wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/my-mikbill.cnf -O $dir_install/my-mikbill.cnf
 }
 
-install_host (){
-rm -Rf $dir_mikbill_www
-mkdir -p $dir_mikkbill_www
-tar xzf $dir_install/admin.tar.gz -C $dir_mikkbill_www
-tar xzf $dir_install/stat.tar.gz -C $dir_mikkbill_www
-tar xzf $dir_install/map.tar.gz -C $dir_mikkbill_www
-}
-
 install_nginx (){
 docker rm -f nginx
 mkdir -p $dir_mikbill_www
@@ -78,7 +70,13 @@ docker start mysql
 
 install_mikbill (){
 docker rm -f mikbill
-mkdir -p $dir_mikbill/log
+
+rm -Rf $dir_mikbill_www
+mkdir -p $dir_mikkbill_www $dir_mikbill/log
+tar xzf $dir_install/admin.tar.gz -C $dir_mikkbill_www
+tar xzf $dir_install/stat.tar.gz -C $dir_mikkbill_www
+tar xzf $dir_install/map.tar.gz -C $dir_mikkbill_www
+
 docker run -p 1812:1812 -p 1813:1813 -p 67:67 -p 68:68 -p 2007:2007 \
           -v $dir_mikbill_www:/var/www/mikbill \
           -v $dir_mikbill/www.conf:/etc/php-fpm.d/www.conf \
