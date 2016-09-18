@@ -19,7 +19,10 @@ mkdir -p $dir_install
 wget https://raw.githubusercontent.com/mikbill/distr/master/install/install.lib -O $dir_install/install.lib
 source $dir_install/install.lib
 
-# Загрузка всех файлов
+# Установка docker
+if [ "$(rpm -qa |grep neon)" = "" ] ; then { curl -sSL https://get.docker.com/ | sh }
+
+# Загрузка файлов
 download (){
 download_mysql
 download_nginx
