@@ -19,6 +19,8 @@ mkdir -p $dir_install
 wget https://raw.githubusercontent.com/mikbill/distr/master/install/install.lib -O $dir_install/install.lib
 source $dir_install/install.lib
 
+install_docker
+
 # Загрузка файлов
 download (){
 download_mysql
