@@ -1,5 +1,5 @@
 #!/bin/bash
-Download_mikbill (){
+download_mikbill (){
 mkdir -p $dir_install $dir_mikbill/dictionary
 wget https://github.com/mikbill/distr/blob/master/host/admin.tar.gz?raw=true -O $dir_install/admin.tar.gz
 wget https://github.com/mikbill/distr/blob/master/host/stat.tar.gz?raw=true -O $dir_install/stat.tar.gz
@@ -16,7 +16,7 @@ wget https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.mi
 wget https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.mpd -O $dir_mikbill/dictionary/dictionary.mpd
 }
 
-Download_nginx (){
+download_nginx (){
 mkdir -p $dir_nginx_vhosts/ssl
 wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/nginx.conf -O $dir_nginx/nginx.conf
 wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/00_stat_zaglushka_vhost.conf -O $dir_nginx_vhosts/00_stat_zaglushka_vhost.conf
@@ -27,21 +27,22 @@ wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.
 wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.key -O $dir_nginx_vhosts/ssl/ca.key
 }
 
-Download_MySQL (){
+download_mysql (){
 wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_2_0_6_utf8.sql -O $dir_install/mikbill_2_0_6_utf8.sql
 wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_5.5.sql -O $dir_install/mikbill_5.5.sql 
 wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/my.cnf -O $dir_install/my.cnf
 wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/my-mikbill.cnf -O $dir_install/my-mikbill.cnf
 }
 
-HOST (){
-mkdir -p /var/www/mikbill
-tar xzf $dir_install/admin.tar.gz -C /var/www/mikbill
-tar xzf $dir_install/stat.tar.gz -C /var/www/mikbill
-tar xzf $dir_install/map.tar.gz -C /var/www/mikbill
+install_host (){
+rm -Rf $dir_mikbill_www
+mkdir -p $dir_mikkbill_www
+tar xzf $dir_install/admin.tar.gz -C $dir_mikkbill_www
+tar xzf $dir_install/stat.tar.gz -C $dir_mikkbill_www
+tar xzf $dir_install/map.tar.gz -C $dir_mikkbill_www
 }
 
-NGINX (){
+install_nginx (){
 docker rm -f nginx
 mkdir -p $dir_mikbill_www
 mkdir -p $dir_nginx_logs
@@ -52,7 +53,7 @@ docker run -p 80:80 -p 443:443 --name nginx -v $dir_nginx/nginx.conf:/etc/nginx/
                                             -v /var/run/php-worker-socket:/var/run/php-worker-socket \
                                             -d nginx
 }
-MYSQL (){
+install_mysql (){
 docker rm -f mysql
 rm -Rf $dir_mysql
 mkdir -p $dir_mysql_base
@@ -75,7 +76,7 @@ rm -f $dir_mysql_base/ib_logfile0 $dir_mysql_base/ib_logfile1 $dir_mysql_base/ib
 docker start mysql
 }
 
-MIKBILL (){
+install_mikbill (){
 mkdir -p $dir_mikbill/log
 docker run -p 1812:1812 -p 1813:1813 -p 67:67 -p 68:68 -p 2007:2007 --name mikbill -d mikbill/mikbill \
           -v $dir_mikbill_www:/var/www/mikbill \
@@ -86,11 +87,13 @@ docker run -p 1812:1812 -p 1813:1813 -p 67:67 -p 68:68 -p 2007:2007 --name mikbi
           -v $dir_mikbill/sql.conf:/etc/raddb/sql.conf \
           -v $dir_mikbill/dictionary:/usr/share/freeradius
 }
-DOCKER_CLEAR (){
+
+docker_clear (){
 docker rm -f $(docker ps -a -q)
 docker rmi -f $(docker images -q)
 }
-INSTALL_CLEAR (){
+
+install_clear (){
 rm -f $dir_base/mikbill_2_0_6_utf8.sql
 rm -f $dir_base/mikbill_5.5.sql
 rm -Rf $dir_install
