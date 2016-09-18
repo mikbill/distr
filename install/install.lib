@@ -89,8 +89,7 @@ docker run -p 1812:1812 -p 1813:1813 -p 67:67 -p 68:68 -p 2007:2007 --name mikbi
 }
 
 docker_clear (){
-docker rm -f $(docker ps -a -q)
-docker rmi -f $(docker images -q)
+docker rm -f $(docker ps -a -q) && docker rmi -f $(docker images -q)
 }
 
 install_clear (){
