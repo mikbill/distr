@@ -19,9 +19,6 @@ mkdir -p $dir_install
 wget https://raw.githubusercontent.com/mikbill/distr/master/install/install.lib -O $dir_install/install.lib
 source $dir_install/install.lib
 
-# Установка docker
-if [ "$(rpm -qa |grep docker)" = "" ] ; then { curl -sSL https://get.docker.com/ | sh } fi
-
 # Загрузка файлов
 download (){
 download_mysql
