@@ -72,7 +72,7 @@ install_mikbill (){
 docker rm -f mikbill
 
 rm -Rf $dir_mikbill_www
-mkdir -p $dir_mikkbill_www $dir_mikbill/log
+mkdir -p $dir_mikkbill_www $dir_mikbill/log/php-fpm
 tar xzf $dir_install/admin.tar.gz -C $dir_mikkbill_www
 tar xzf $dir_install/stat.tar.gz -C $dir_mikkbill_www
 tar xzf $dir_install/map.tar.gz -C $dir_mikkbill_www
