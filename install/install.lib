@@ -102,9 +102,8 @@ rm -Rf $dir_install
 # Установка docker
 install_docker (){
 if [ "$(rpm -qa |grep docker)" = "" ] ; then {
-  curl -sSL https://get.docker.com/ | sh 
-  /etc/init.d/docker start
-    } 
-  fi  
-  }
+curl -sSL https://get.docker.com/ | sh 
+/etc/init.d/docker start
+} 
+fi  
 }
