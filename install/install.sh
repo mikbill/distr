@@ -37,6 +37,6 @@ install_mikbill
 }
 install
 # Удаление установочных файлов
-install_clear
+#install_clear
 
 docker ps
