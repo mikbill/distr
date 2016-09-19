@@ -7,7 +7,7 @@ chmod +x /usr/local/sbin/radiusd_run.sh
 
 CMD /usr/local/sbin/radiusd_run.sh
 
-EXPOSE 1812 1813 67 68
+EXPOSE 1812/udp 1813/udp 67 68
 
 RUN yum install -y  http://194.125.224.7/6/x86_64/perl-PHP-Serialization-0.34-6.el6.art.noarch.rpm \
                     http://194.125.224.7/6/x86_64/mikbill-freeradius-2.2.6-1.el6.x86_64.rpm \
