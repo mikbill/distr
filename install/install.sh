@@ -2,7 +2,7 @@
 mysql_root_passwd="passwd"
 mysql_mikbill_passwd="passwd"
 # Где будут лежать рабочие конфиги/база
-dir_root="/opt/mikbill"
+dir_root="/opt/cloud"
 # Каталог для загрузки и с которого будет установка
 dir_download="/opt/install"
 
