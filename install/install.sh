@@ -1,14 +1,16 @@
 #!/bin/bash
 mysql_root_passwd="passwd"
 mysql_mikbill_passwd="passwd"
-
+# Где будут лежать рабочие конфиги/база
 dir_root="/opt/mikbill"
+# Каталог для загрузки и с которого будет установка
+dir_install="/opt/install"
+# Каталоги контейнеров
 dir_mysql="$dir_root/mysql"
 dir_nginx="$dir_root/nginx"
 dir_mikbill="$dir_root/mikbill"
 dir_radius="$dir_radius/radius"
 
-dir_install="$dir_root/install"
 #MySQL
 dir_mysql_base="$dir_mysql/base"
 #Nginx
