@@ -6,9 +6,9 @@ dir_root="/opt/mikbill"
 # Каталог для загрузки и с которого будет установка
 dir_download="/opt/install"
 
-mkdir -p $dir_install
-wget https://raw.githubusercontent.com/mikbill/distr/master/install/install.lib -O $dir_install/install.lib
-source $dir_install/install.lib
+mkdir -p $dir_download
+wget https://raw.githubusercontent.com/mikbill/distr/master/install/install.lib -O $dir_download/install.lib
+source $dir_download/install.lib
 
 install_docker
 
