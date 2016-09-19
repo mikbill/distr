@@ -22,15 +22,14 @@ wget https://github.com/mikbill/distr/raw/master/mikbill/crontab -O $dir_install
 
 download_radius (){
 rm -Rf $dir_install/radius
-mkdir -p  $dir_install/radius
-cd $dir_install/radius
+mkdir -p  $dir_install/radius/dictionary
 wget -P $dir_install/radius   https://github.com/mikbill/distr/raw/master/mikbill/radiusd.conf \
                               https://github.com/mikbill/distr/raw/master/mikbill/sql.conf
-wget https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary -O $dir_install/radius/dictionary/dictionary
-wget https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.dhcp -O $dir_install/radius/dictionary/dictionary.dhcp
-wget https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.dlink -O $dir_install/radius/dictionary/dictionary.dlink
-wget https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.mikrotik -O $dir_install/radius/dictionary/dictionary.mikrotik
-wget https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.mpd -O $dir_install/radius/dictionary/dictionary.mpd
+wget -P $dir_install/radius/dictionary  https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary 
+                                        https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.dhcp 
+                                        https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.dlink
+                                        https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.mikrotik
+                                        https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.mpd
 }
 
 download_nginx (){
