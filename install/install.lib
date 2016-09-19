@@ -108,6 +108,7 @@ cp -R $dir_download/radius $dir_root
 docker run -p 1812:1812 -p 1813:1813 -p 67:67 -p 68:68  -v $dir_root/radius/radiusd.conf:/etc/raddb/radiusd.conf \
                                                         -v $dir_root/radius/sql.conf:/etc/raddb/sql.conf \
                                                         -v $dir_root/radius/dictionary:/usr/share/freeradius \
+                                                        -v $dir_root/mysql/base/mysql.sock:/var/lib/mysql/mysql.sock \
                                                         --name radius -d mikbill/radius
 
 sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/radius/sql.conf
