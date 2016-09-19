@@ -2,11 +2,12 @@
 download_mikbill (){
 rm -Rf $dir_download/mikbill
 mkdir -p  $dir_download/mikbill 
-wget -p $dir_download/mikbill  https://github.com/mikbill/distr/blob/master/host/admin.tar.gz?raw=true \
-                              https://github.com/mikbill/distr/blob/master/host/stat.tar.gz?raw=true \
-                              https://github.com/mikbill/distr/blob/master/host/map.tar.gz?raw=true \
-                              https://raw.githubusercontent.com/mikbill/distr/master/mikbill/www.conf \
-                              https://github.com/mikbill/distr/raw/master/mikbill/crontab
+wget -P $dir_download/mikbill https://github.com/mikbill/distr/raw/master/mikbill/crontab 
+wget -P $dir_download/mikbill/www https://github.com/mikbill/distr/blob/master/host/admin.tar.gz?raw=true \
+                                  https://github.com/mikbill/distr/blob/master/host/stat.tar.gz?raw=true \
+                                  https://github.com/mikbill/distr/blob/master/host/map.tar.gz?raw=true \
+                                  https://raw.githubusercontent.com/mikbill/distr/master/mikbill/www.conf
+                              
 }
 
 download_radius (){
