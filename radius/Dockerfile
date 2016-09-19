@@ -1,7 +1,8 @@
 From centos:6.8
 RUN yum update -y && \
 yum install -y  wget && \
-wget https://github.com/mikbill/distr/raw/master/mikbill/radiusd_run.sh -O /usr/local/sbin/radiusd_run.sh && \
+wget -P /usr/local/sbin https://github.com/mikbill/distr/raw/master/mikbill/radiusd_run.sh && \
+wget -P /etc/raddb https://github.com/mikbill/distr/raw/master/radius/mikbill.conf && \
 chmod +x /usr/local/sbin/radiusd_run.sh
 
 CMD /usr/local/sbin/radiusd_run.sh
