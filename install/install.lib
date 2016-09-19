@@ -48,7 +48,7 @@ install_nginx (){
 docker rm -f nginx
 rm -Rf $dir_root/nginx
 mkdir -p $dir_root/nginx/logs
-cp -R $dir_download/nginx $dir_root/nginx
+cp -R $dir_download/nginx $dir_root/
 
 docker run -p 80:80 -p 443:443  -v $dir_root/nginx/nginx.conf:/etc/nginx/nginx.conf \
                                 -v $dir_root/nginx/vhosts:/etc/nginx/conf.d \
