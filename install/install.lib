@@ -23,8 +23,8 @@ wget -P $dir_install/radius/dictionary  https://github.com/mikbill/distr/raw/mas
 
 download_nginx (){
 rm -Rf $dir_install/nginx
-mkdir -p $dir_nginx_vhosts/ssl
-wget -P $dir_nginx https://raw.githubusercontent.com/mikbill/distr/master/nginx/nginx.conf
+mkdir -p $dir_install/nginx/vhosts/ssl
+wget -P $dir_install/nginx https://raw.githubusercontent.com/mikbill/distr/master/nginx/nginx.conf
 wget -P $dir_nginx_vhosts     https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/00_stat_zaglushka_vhost.conf \
                               https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/admin_vhost.conf \
                               https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/map_vhost.conf \
