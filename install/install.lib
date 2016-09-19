@@ -1,23 +1,12 @@
 #!/bin/bash
-create_dir(){
-#mkdir -p  $dir_install \
-#          $dir_mikbill/dictionary \
-#          $dir_nginx_vhosts/ssl \
-#          $dir_mikbill_www \
-#          $dir_nginx_logs \
-#          $dir_radius
-mkdir -p  $dir_install/mikbill \
-          $dir_install/mysql \
-          $dir_install/radius \
-          $dir_install/nginx
-}
 download_mikbill (){
+rm -Rf $dir_install/mikbill
 mkdir -p  $dir_install/mikbill 
-wget https://github.com/mikbill/distr/blob/master/host/admin.tar.gz?raw=true -O $dir_install/mikbill/admin.tar.gz
-wget https://github.com/mikbill/distr/blob/master/host/stat.tar.gz?raw=true -O $dir_install/mikbill/stat.tar.gz
-wget https://github.com/mikbill/distr/blob/master/host/map.tar.gz?raw=true -O $dir_install/mikbill/map.tar.gz
-wget https://raw.githubusercontent.com/mikbill/distr/master/mikbill/www.conf -O $dir_install/mikbill/www.conf
-wget https://github.com/mikbill/distr/raw/master/mikbill/crontab -O $dir_install/mikbill/crontab
+wget -p $dir_install/mikbill  https://github.com/mikbill/distr/blob/master/host/admin.tar.gz?raw=true \
+                              https://github.com/mikbill/distr/blob/master/host/stat.tar.gz?raw=true \
+                              https://github.com/mikbill/distr/blob/master/host/map.tar.gz?raw=true \
+                              https://raw.githubusercontent.com/mikbill/distr/master/mikbill/www.conf \
+                              https://github.com/mikbill/distr/raw/master/mikbill/crontab
 }
 
 download_radius (){
@@ -33,20 +22,24 @@ wget -P $dir_install/radius/dictionary  https://github.com/mikbill/distr/raw/mas
 }
 
 download_nginx (){
-wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/nginx.conf -O $dir_nginx/nginx.conf
-wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/00_stat_zaglushka_vhost.conf -O $dir_nginx_vhosts/00_stat_zaglushka_vhost.conf
-wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/admin_vhost.conf -O $dir_nginx_vhosts/admin_vhost.conf
-wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/map_vhost.conf -O $dir_nginx_vhosts/map_vhost.conf
-wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/stat_vhost.conf -O $dir_nginx_vhosts/stat_vhost.conf
-wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.crt -O $dir_nginx_vhosts/ssl/ca.crt
-wget https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.key -O $dir_nginx_vhosts/ssl/ca.key
+rm -Rf $dir_install/nginx
+mkdir -p $dir_nginx_vhosts/ssl
+wget -P $dir_nginx https://raw.githubusercontent.com/mikbill/distr/master/nginx/nginx.conf
+wget -P $dir_nginx_vhosts     https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/00_stat_zaglushka_vhost.conf \
+                              https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/admin_vhost.conf \
+                              https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/map_vhost.conf \
+                              https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/stat_vhost.conf
+wget -P $dir_nginx_vhosts/ssl https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.crt \
+                              https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.key
 }
 
 download_mysql (){
-wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_2_0_6_utf8.sql -O $dir_install/mikbill_2_0_6_utf8.sql
-wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_5.5.sql -O $dir_install/mikbill_5.5.sql 
-wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/my.cnf -O $dir_install/my.cnf
-wget https://raw.githubusercontent.com/mikbill/distr/master/mysql/my-mikbill.cnf -O $dir_install/my-mikbill.cnf
+rm -Rf $dir_install/mysql
+mkdir -p $dir_mysql_base
+wget -P $dir_install/mysql    https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_2_0_6_utf8.sql \
+                              https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_5.5.sql \ 
+                              https://raw.githubusercontent.com/mikbill/distr/master/mysql/my.cnf \
+                              https://raw.githubusercontent.com/mikbill/distr/master/mysql/my-mikbill.cnf
 }
 
 install_nginx (){
