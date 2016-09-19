@@ -7,8 +7,6 @@ wget -P $dir_download/mikbill https://github.com/mikbill/distr/raw/master/mikbil
 wget https://github.com/mikbill/distr/blob/master/host/admin.tar.gz?raw=true -O $dir_download/mikbill/www/admin.tar.gz
 wget https://github.com/mikbill/distr/blob/master/host/stat.tar.gz?raw=true -O $dir_download/mikbill/www/stat.tar.gz
 wget https://github.com/mikbill/distr/blob/master/host/map.tar.gz?raw=true -O $dir_download/mikbill/www/map.tar.gz
-                                  
-                              
 }
 
 download_radius (){
