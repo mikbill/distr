@@ -50,12 +50,12 @@ rm -Rf $dir_root/nginx
 mkdir -p $dir_root/nginx
 cp -R $dir_download/nginx $dir_root/nginx
 
-docker run -p 80:80 -p 443:443 --name nginx -v $dir_root/nginx/nginx.conf:/etc/nginx/nginx.conf \
-                                            -v $dir_root/nginx/vhosts:/etc/nginx/conf.d \
-                                            -v $dir_root/mikbill/www:/var/www/mikbill \
-                                            -v $dir_root/nginx/logs:/var/log/nginx \
-                                            -v /var/run/php-worker-socket:/var/run/php-worker-socket \
-                                            -d nginx
+docker run -p 80:80 -p 443:443  -v $dir_root/nginx/nginx.conf:/etc/nginx/nginx.conf \
+                                -v $dir_root/nginx/vhosts:/etc/nginx/conf.d \
+                                -v $dir_root/mikbill/www:/var/www/mikbill \
+                                -v $dir_root/nginx/logs:/var/log/nginx \
+                                -v /var/run/php-worker-socket:/var/run/php-worker-socket \
+                                --name nginx -d nginx
 }
 
 install_mysql (){
