@@ -6,6 +6,8 @@ dir_root="/opt/mikbill"
 dir_mysql="$dir_root/mysql"
 dir_nginx="$dir_root/nginx"
 dir_mikbill="$dir_root/mikbill"
+dir_radius="$dir_radius/radius"
+
 dir_install="$dir_root/install"
 #MySQL
 dir_mysql_base="$dir_mysql/base"
@@ -26,6 +28,7 @@ download (){
 download_mysql
 download_nginx
 download_mikbill
+download_radius
 }
 download
 # Установка
@@ -33,6 +36,7 @@ install (){
 install_mysql
 install_nginx
 install_mikbill
+install_radius
 }
 install
 # Удаление установочных файлов
