@@ -73,7 +73,7 @@ docker exec mysql sh -c "exec mysql -uroot -p$mysql_root_passwd mikbill < /var/l
 
 docker stop mysql
 rm -f  $dir_root/mysql/my.cnf
-cp $dir_root/mysql/my-mikbill.cnf $dir_root/mysql/my.cnf
+mv $dir_root/mysql/my-mikbill.cnf $dir_root/mysql/my.cnf
 rm -f $dir_root/mysql/base/ib_logfile0 $dir_root/mysql/base/ib_logfile1 $dir_root/mysql/base/ibdata1
 docker start mysql
 }
