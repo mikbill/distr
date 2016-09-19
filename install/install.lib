@@ -47,7 +47,7 @@ wget -P $dir_download/mysql/base https://raw.githubusercontent.com/mikbill/distr
 install_nginx (){
 docker rm -f nginx
 rm -Rf $dir_root/nginx
-mkdir -p $dir_root/nginx
+mkdir -p $dir_root/nginx/logs
 cp -R $dir_download/nginx $dir_root/nginx
 
 docker run -p 80:80 -p 443:443  -v $dir_root/nginx/nginx.conf:/etc/nginx/nginx.conf \
