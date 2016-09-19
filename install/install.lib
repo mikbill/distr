@@ -46,68 +46,73 @@ wget -P $dir_download/mysql/base https://raw.githubusercontent.com/mikbill/distr
 
 install_nginx (){
 docker rm -f nginx
-docker run -p 80:80 -p 443:443 --name nginx -v $dir_nginx/nginx.conf:/etc/nginx/nginx.conf \
-                                            -v $dir_nginx_vhosts:/etc/nginx/conf.d \
-                                            -v $dir_mikbill_www:/var/www/mikbill \
-                                            -v $dir_nginx_logs:/var/log/nginx \
+rm -Rf $dir_root/nginx
+mkdir -p $dir_root/nginx
+cp -R $dir_download/nginx $dir_root/nginx
+
+docker run -p 80:80 -p 443:443 --name nginx -v $dir_root/nginx/nginx.conf:/etc/nginx/nginx.conf \
+                                            -v $dir_root/nginx/vhosts:/etc/nginx/conf.d \
+                                            -v $dir_root/mikbill/www:/var/www/mikbill \
+                                            -v $dir_root/nginx/logs:/var/log/nginx \
                                             -v /var/run/php-worker-socket:/var/run/php-worker-socket \
                                             -d nginx
 }
 
 install_mysql (){
 docker rm -f mysql
-rm -Rf $dir_mysql
-mkdir -p $dir_mysql_base
-cp $dir_download/my.cnf $dir_mysql/my.cnf
-cp $dir_download/mikbill_2_0_6_utf8.sql $dir_mysql_base/mikbill_2_0_6_utf8.sql 
+rm -Rf $dir_root/mysql
+mkdir -p $dir_root/mysql
+cp -R $dir_download/mysql $dir_root/mysql
 
-docker run -p 3306:3306 -v $dir_mysql/my.cnf:/etc/mysql/conf.d/my.cnf \
-                        -v $dir_mysql_base:/var/lib/mysql \
+docker run -p 3306:3306 -v $dir_root/mysql/my.cnf:/etc/mysql/conf.d/my.cnf \
+                        -v $dir_root/mysql/base:/var/lib/mysql \
                         --name mysql -e MYSQL_ROOT_PASSWORD=$mysql_root_passwd -d mysql:5.5
-sed -e "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_download/mikbill_5.5.sql > $dir_mysql_base/mikbill_5.5.sql
+sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/mysql/base/mikbill_5.5.sql
 
 sleep 20
 docker exec mysql sh -c "exec mysql -uroot -p$mysql_root_passwd < /var/lib/mysql/mikbill_5.5.sql"
 docker exec mysql sh -c "exec mysql -uroot -p$mysql_root_passwd mikbill < /var/lib/mysql/mikbill_2_0_6_utf8.sql"
 
 docker stop mysql
-rm -f  $dir_mysql/my.cnf
-cp $dir_download/my-mikbill.cnf $dir_mysql/my.cnf
-rm -f $dir_mysql_base/ib_logfile0 $dir_mysql_base/ib_logfile1 $dir_mysql_base/ibdata1
+rm -f  $dir_root/mysql/my.cnf
+cp $dir_root/mysql/my-mikbill.cnf $dir_root/mysql/my.cnf
+rm -f $dir_root/mysql/base/ib_logfile0 $dir_root/mysql/base/ib_logfile1 $dir_root/mysql/base/ibdata1
 docker start mysql
 }
 
 install_mikbill (){
 docker rm -f mikbill
-rm -Rf $dir_mikbill_www
-mkdir -p $dir_mikkbill_www $dir_mikbill/log/php-fpm
-tar xzf $dir_download/mikbill/admin.tar.gz -C $dir_mikkbill_www
-tar xzf $dir_download/mikbill/stat.tar.gz -C $dir_mikkbill_www
-tar xzf $dir_download/mikbill/map.tar.gz -C $dir_mikkbill_www
-cp $dir_download/mikbill/crontab $dir_mikbill/crontab
-cp $dir_download/mikbill/www.conf $dir_mikbill/www.conf
+rm -Rf $dir_root/mikbill
+mkdir -p $dir_root/mikbill
+cp -R $dir_download/mikbill $dir_root/mikbill
+mkdir -p $dir_mikbill/log/php-fpm
+tar xzf $dir_root/mikbill/www/admin.tar.gz
+tar xzf $dir_root/mikbill/www/stat.tar.gz
+tar xzf $dir_root/mikbill/www/map.tar.gz
 
-sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_mikbill_www/admin/app/etc/config.xml
-sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_mikbill_www/stat/app/etc/config.xml
-sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_mikbill_www/map/app/etc/config.xml
+sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/mikbill/www/admin/app/etc/config.xml
+sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/mikbill/www/stat/app/etc/config.xml
+sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/mikbill/www/map/app/etc/config.xml
 
-docker run -p 1812:1812 -p 1813:1813 -p 67:67 -p 68:68 -p 2007:2007 \
-          -v $dir_mikbill_www:/var/www/mikbill \
-          -v $dir_mikbill/www.conf:/etc/php-fpm.d/www.conf \
-          -v $dir_mikbill/crontab:/etc/crontab \
-          -v $dir_mikbill/log/:/var/log/ \
-          -v $dir_mikbill/radiusd.conf:/etc/raddb/radiusd.conf \
-          -v $dir_mikbill/sql.conf:/etc/raddb/sql.conf \
-          -v $dir_mikbill/dictionary:/usr/share/freeradius \
-          --name mikbill -d mikbill/mikbill
+docker run -p 2007:2007 -v $dir_root/mikbill/www:/var/www/mikbill \
+                        -v $dir_root/mikbill/www.conf:/etc/php-fpm.d/www.conf \
+                        -v $dir_root/mikbill/crontab:/etc/crontab \
+                        -v $dir_root/mikbill/log/:/var/log/ \
+                        --name mikbill -d mikbill/mikbill
 }
 
 install_radius (){
 docker rm -f radius
-rm -Rf $dir_radius
-mkdir -p $dir_radius
-sed -e "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_download/sql.conf >$dir_radius
+rm -Rf $dir_root/radius
+mkdir -p $dir_root/radius/dictionary
+cp -R $dir_download/radius $dir_root/radius
 
+docker run -p 1812:1812 -p 1813:1813 -p 67:67 -p 68:68  -v $dir_root/radius/radiusd.conf:/etc/raddb/radiusd.conf \
+                                                        -v $dir_root/radius/sql.conf:/etc/raddb/sql.conf \
+                                                        -v $dir_root/radius/dictionary:/usr/share/freeradius \
+                                                        --name radius -d mikbill/radius
+
+sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/radius/sql.conf
 }
 
 docker_clear (){
