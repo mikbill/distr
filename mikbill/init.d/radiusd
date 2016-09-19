@@ -1,0 +1,78 @@
+#!/bin/sh
+#
+# chkconfig: - 88 10
+# description: Start/Stop the RADIUS server daemon
+#
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+prog="radiusd"
+LOCKF=/var/lock/subsys/radiusd
+RUN_SCRIPT=/usr/local/sbin/radiusd_run.sh
+PATERN_KILL="/usr/sbin"
+
+RETVAL=0
+start() {
+	echo -n $"Starting $prog server: OK" 
+	if [ ! -f $LOCKF ] ; then
+		daemon $RUN_SCRIPT & 2>/dev/null
+	fi 
+	RETVAL=$?
+	touch $LOCKF 
+	ln -s /var/run/radiusd/radiusd.pid /var/run/radiusd.pid 2>/dev/null
+	echo	
+	return 1
+}
+stop() {
+	echo -n $"Stopping $prog server: OK"
+	kill -9 `ps auxfw|grep radiusd_run.sh|grep usr|awk {'print $2'}` >/dev/null 2>&1
+	kill -9 `ps auxfw|grep radiusd|grep $PATERN_KILL|awk {'print $2'}` >/dev/null 2>&1
+	RETVAL=$?
+	rm -f $LOCKF
+	echo
+	return 1
+
+}
+status_check() {
+	echo -n $"Status $prog server PID: "
+	echo `ps auxfw|grep radiusd|grep $PATERN_KILL|awk {'print $2'}`
+	status radiusd
+	return 1
+}
+restart() {                                                                                                           
+	echo -n $"Reloading $prog server: OK "
+        stop
+        sleep 1
+        start
+        return 1
+}     
+case "$1" in
+  start)
+	start
+	status_check
+	;;
+  stop)
+	stop
+	status_check
+	;;
+  status)
+	status_check
+        ;;
+  reload)
+	restart
+	;;
+  restart)
+	restart
+	;;
+  condrestart)
+  	restart
+	;;
+  *)
+	echo $"Usage: $0 {start|stop|status|restart|reload|condrestart}"
+	status_check
+	exit 1
+esac
+echo ""
+exit
+

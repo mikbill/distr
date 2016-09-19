@@ -1,0 +1,77 @@
+#!/bin/sh
+#
+# chkconfig: - 86 12
+# description: Start/Stop the MikBiLL server daemon
+#
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+prog="MikBiLL_RKN"
+LOCKF=/var/lock/subsys/mikbill_rkn
+RUN_SCRIPT=/var/www/mikbill/admin/sys/scripts/rkn.sh
+MIKBILL_PID=/var/run/mikbill_rkn.pid
+RETVAL=0
+
+start() {
+        echo -n $"Starting $prog server: OK" 
+        echo
+        rm -rf $MIKBILL_PID
+	if [ ! -f $LOCKF ] ; then
+		daemon $RUN_SCRIPT & 2>/dev/null
+	fi 
+	RETVAL=$?
+	touch $LOCKF 
+	return 1
+}
+stop() {
+	echo -n $"Stopping $prog server: OK"
+	echo
+        kill -9 `ps auxfw|grep rkn.sh|grep admin|awk {'print $2'}` 2>/dev/null 2>&1
+        kill -9 `ps auxfw|grep runRosKomNadzorDaemon|grep /usr/bin|awk {'print $2'}` 2>/dev/null 2>&1
+	RETVAL=$?
+	rm -rf $LOCKF >/dev/null
+	rm -rf $MIKBILL_PID >/dev/null
+	return 1
+}
+status_check() {
+	echo -n $"Status $prog server PID: "
+	echo `ps auxfw|grep rkn.sh|awk {'print $2'}`
+	status mikbill_rkn
+	return 1
+}
+restart() {                                                                                                           
+	echo -n $"Reloading $prog server: OK "
+        stop
+        sleep 1
+        start
+        return 1
+}     
+case "$1" in
+  start)
+	start
+	status_check
+	;;
+  stop)
+	stop
+	status_check	
+	;;
+  status)
+	status_check
+        ;;
+  reload)
+	restart
+	;;
+  restart)
+	restart
+	;;
+  condrestart)
+  	restart
+	;;
+  *)
+	echo $"Usage: $0 {start|stop|status|restart|reload|condrestart}"
+	status_check
+	exit 1
+esac
+echo ""
+exit
