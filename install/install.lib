@@ -1,8 +1,8 @@
 #!/bin/bash
 download_mikbill (){
-rm -Rf $dir_install/mikbill
-mkdir -p  $dir_install/mikbill 
-wget -p $dir_install/mikbill  https://github.com/mikbill/distr/blob/master/host/admin.tar.gz?raw=true \
+rm -Rf $dir_download/mikbill
+mkdir -p  $dir_download/mikbill 
+wget -p $dir_download/mikbill  https://github.com/mikbill/distr/blob/master/host/admin.tar.gz?raw=true \
                               https://github.com/mikbill/distr/blob/master/host/stat.tar.gz?raw=true \
                               https://github.com/mikbill/distr/blob/master/host/map.tar.gz?raw=true \
                               https://raw.githubusercontent.com/mikbill/distr/master/mikbill/www.conf \
@@ -10,11 +10,11 @@ wget -p $dir_install/mikbill  https://github.com/mikbill/distr/blob/master/host/
 }
 
 download_radius (){
-rm -Rf $dir_install/radius
-mkdir -p $dir_install/radius/dictionary
-wget -P $dir_install/radius   https://github.com/mikbill/distr/raw/master/mikbill/radiusd.conf \
+rm -Rf $dir_download/radius
+mkdir -p $dir_download/radius/dictionary
+wget -P $dir_download/radius   https://github.com/mikbill/distr/raw/master/mikbill/radiusd.conf \
                               https://github.com/mikbill/distr/raw/master/mikbill/sql.conf
-wget -P $dir_install/radius/dictionary  https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary \
+wget -P $dir_download/radius/dictionary  https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary \
                                         https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.dhcp \
                                         https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.dlink \
                                         https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.mikrotik \
@@ -22,23 +22,23 @@ wget -P $dir_install/radius/dictionary  https://github.com/mikbill/distr/raw/mas
 }
 
 download_nginx (){
-rm -Rf $dir_install/nginx
-mkdir -p $dir_install/nginx/vhosts/ssl
-wget -P $dir_install/nginx https://raw.githubusercontent.com/mikbill/distr/master/nginx/nginx.conf
-wget -P $dir_install/nginx/vhosts https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/00_stat_zaglushka_vhost.conf \
+rm -Rf $dir_download/nginx
+mkdir -p $dir_download/nginx/vhosts/ssl
+wget -P $dir_download/nginx https://raw.githubusercontent.com/mikbill/distr/master/nginx/nginx.conf
+wget -P $dir_download/nginx/vhosts https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/00_stat_zaglushka_vhost.conf \
                                   https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/admin_vhost.conf \
                                   https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/map_vhost.conf \
                                   https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/stat_vhost.conf
-wget -P $dir_nginx_vhosts/ssl https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.crt \
-                              https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.key
+wget -P $dir_download/nginx/ssl https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.crt \
+                                https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.key
 }
 
 download_mysql (){
-rm -Rf $dir_install/mysql
-mkdir -p $dir_install/mysql/base
-wget -P $dir_install/mysql  https://raw.githubusercontent.com/mikbill/distr/master/mysql/my.cnf \
+rm -Rf $dir_download/mysql
+mkdir -p $dir_download/mysql/base
+wget -P $dir_download/mysql  https://raw.githubusercontent.com/mikbill/distr/master/mysql/my.cnf \
                             https://raw.githubusercontent.com/mikbill/distr/master/mysql/my-mikbill.cnf
-wget -P $dir_install/mysql/base https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_2_0_6_utf8.sql \
+wget -P $dir_download/mysql/base https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_2_0_6_utf8.sql \
                                 https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_5.5.sql
 }
 
@@ -56,13 +56,13 @@ install_mysql (){
 docker rm -f mysql
 rm -Rf $dir_mysql
 mkdir -p $dir_mysql_base
-cp $dir_install/my.cnf $dir_mysql/my.cnf
-cp $dir_install/mikbill_2_0_6_utf8.sql $dir_mysql_base/mikbill_2_0_6_utf8.sql 
+cp $dir_download/my.cnf $dir_mysql/my.cnf
+cp $dir_download/mikbill_2_0_6_utf8.sql $dir_mysql_base/mikbill_2_0_6_utf8.sql 
 
 docker run -p 3306:3306 -v $dir_mysql/my.cnf:/etc/mysql/conf.d/my.cnf \
                         -v $dir_mysql_base:/var/lib/mysql \
                         --name mysql -e MYSQL_ROOT_PASSWORD=$mysql_root_passwd -d mysql:5.5
-sed -e "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_install/mikbill_5.5.sql > $dir_mysql_base/mikbill_5.5.sql
+sed -e "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_download/mikbill_5.5.sql > $dir_mysql_base/mikbill_5.5.sql
 
 sleep 20
 docker exec mysql sh -c "exec mysql -uroot -p$mysql_root_passwd < /var/lib/mysql/mikbill_5.5.sql"
@@ -70,7 +70,7 @@ docker exec mysql sh -c "exec mysql -uroot -p$mysql_root_passwd mikbill < /var/l
 
 docker stop mysql
 rm -f  $dir_mysql/my.cnf
-cp $dir_install/my-mikbill.cnf $dir_mysql/my.cnf
+cp $dir_download/my-mikbill.cnf $dir_mysql/my.cnf
 rm -f $dir_mysql_base/ib_logfile0 $dir_mysql_base/ib_logfile1 $dir_mysql_base/ibdata1
 docker start mysql
 }
@@ -79,11 +79,11 @@ install_mikbill (){
 docker rm -f mikbill
 rm -Rf $dir_mikbill_www
 mkdir -p $dir_mikkbill_www $dir_mikbill/log/php-fpm
-tar xzf $dir_install/mikbill/admin.tar.gz -C $dir_mikkbill_www
-tar xzf $dir_install/mikbill/stat.tar.gz -C $dir_mikkbill_www
-tar xzf $dir_install/mikbill/map.tar.gz -C $dir_mikkbill_www
-cp $dir_install/mikbill/crontab $dir_mikbill/crontab
-cp $dir_install/mikbill/www.conf $dir_mikbill/www.conf
+tar xzf $dir_download/mikbill/admin.tar.gz -C $dir_mikkbill_www
+tar xzf $dir_download/mikbill/stat.tar.gz -C $dir_mikkbill_www
+tar xzf $dir_download/mikbill/map.tar.gz -C $dir_mikkbill_www
+cp $dir_download/mikbill/crontab $dir_mikbill/crontab
+cp $dir_download/mikbill/www.conf $dir_mikbill/www.conf
 
 sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_mikbill_www/admin/app/etc/config.xml
 sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_mikbill_www/stat/app/etc/config.xml
@@ -104,7 +104,7 @@ install_radius (){
 docker rm -f radius
 rm -Rf $dir_radius
 mkdir -p $dir_radius
-sed -e "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_install/sql.conf >$dir_radius
+sed -e "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_download/sql.conf >$dir_radius
 
 }
 
@@ -115,7 +115,7 @@ docker rm -f $(docker ps -a -q) && docker rmi -f $(docker images -q)
 install_clear (){
 rm -f $dir_base/mikbill_2_0_6_utf8.sql
 rm -f $dir_base/mikbill_5.5.sql
-rm -Rf $dir_install
+rm -Rf $dir_download
 }
 # Установка docker
 install_docker (){
