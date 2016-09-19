@@ -22,7 +22,7 @@ wget https://github.com/mikbill/distr/raw/master/mikbill/crontab -O $dir_install
 
 download_radius (){
 rm -Rf $dir_install/radius
-mkdir -p  $dir_install/radius/dictionary
+mkdir -p $dir_install/radius/dictionary
 wget -P $dir_install/radius   https://github.com/mikbill/distr/raw/master/mikbill/radiusd.conf \
                               https://github.com/mikbill/distr/raw/master/mikbill/sql.conf
 wget -P $dir_install/radius/dictionary  https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary 
