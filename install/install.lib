@@ -24,8 +24,8 @@ download_radius (){
 rm -Rf $dir_install/radius
 mkdir -p  $dir_install/radius
 cd $dir_install/radius
-wget https://github.com/mikbill/distr/raw/master/mikbill/radiusd.conf
-wget https://github.com/mikbill/distr/raw/master/mikbill/sql.conf
+wget -P $dir_install/radius   https://github.com/mikbill/distr/raw/master/mikbill/radiusd.conf \
+                              https://github.com/mikbill/distr/raw/master/mikbill/sql.conf
 wget https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary -O $dir_install/radius/dictionary/dictionary
 wget https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.dhcp -O $dir_install/radius/dictionary/dictionary.dhcp
 wget https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.dlink -O $dir_install/radius/dictionary/dictionary.dlink
