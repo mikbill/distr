@@ -9,6 +9,7 @@ wget https://github.com/mikbill/distr/raw/master/mikbill/sudoers -O /etc/sudoers
 wget https://github.com/mikbill/distr/raw/master/mikbill/mikbill_run.sh -O /usr/local/sbin/mikbill_run.sh && \
 wget https://github.com/mikbill/distr/raw/master/mikbill/radiusd_run.sh -O /usr/local/sbin/radiusd_run.sh && \
 wget https://github.com/mikbill/distr/raw/master/mikbill/init.d/mikbill -O /etc/init.d/mikbill && \
+wget https://github.com/mikbill/distr/raw/master/mikbill/init.d/start.sh -O /start.sh && \
 wget https://github.com/mikbill/distr/blob/master/mikbill/ZendGuardLoader.so?raw=true -O /usr/local/zend/ZendGuardLoader.so
 
 EXPOSE 1812 1813 67 68 2007
@@ -26,7 +27,4 @@ pear channel-discover pear.phing.info && \
 pear upgrade && \
 pear -q install phing/phing
 
-CMD   /usr/sbin/crond && \   
-      /usr/sbin/php-fpm && \
-      /usr/sbin/radiusd && \
-      /usr/local/sbin/mikbill_run.sh
+CMD start.sh
