@@ -113,6 +113,7 @@ docker run -p 1812:1812 -p 1813:1813 -p 67:67 -p 68:68  -v $dir_root/radius/radi
 
 sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/radius/sql.conf
 docker exec radius sh -c "exec mv /tmp/freeradius/* /usr/share/freeradius/"
+docker restart radius
 }
 
 docker_clear (){
