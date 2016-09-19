@@ -29,8 +29,8 @@ wget -P $dir_download/nginx/vhosts https://raw.githubusercontent.com/mikbill/dis
                                   https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/admin_vhost.conf \
                                   https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/map_vhost.conf \
                                   https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/stat_vhost.conf
-wget -P $dir_download/nginx/ssl https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.crt \
-                                https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.key
+wget -P $dir_download/nginx/vhost/ssl https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.crt \
+                                      https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.key
 }
 
 download_mysql (){
