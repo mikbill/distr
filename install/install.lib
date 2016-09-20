@@ -84,9 +84,9 @@ rm -Rf $dir_root/mikbill
 mkdir -p $dir_root/mikbill
 cp -R $dir_download/mikbill $dir_root
 mkdir -p $dir_mikbill/log/php-fpm
-tar xzf $dir_root/mikbill/www/admin.tar.gz
-tar xzf $dir_root/mikbill/www/stat.tar.gz
-tar xzf $dir_root/mikbill/www/map.tar.gz
+tar xzf $dir_root/mikbill/www/admin.tar.gz -C $dir_root/mikbill/www/
+tar xzf $dir_root/mikbill/www/stat.tar.gz -C $dir_root/mikbill/www/
+tar xzf $dir_root/mikbill/www/map.tar.gz -C $dir_root/mikbill/www/
 
 sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/mikbill/www/admin/app/etc/config.xml
 sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/mikbill/www/stat/app/etc/config.xml
