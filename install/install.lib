@@ -94,7 +94,7 @@ docker run -p 2007:2007 -v $dir_root/mikbill/www:/var/www/mikbill \
                         -v $dir_root/mikbill/www.conf:/etc/php-fpm.d/www.conf \
                         -v $dir_root/mikbill/crontab:/etc/crontab \
                         -v $dir_root/mikbill/log/:/var/log/ \
-                        -v $dir_root/mikbill/php-socket/:/var/run/ \
+                        -v $dir_root/mikbill/php-socket/php-worker-socket:/var/run/php-worker-socket \
                         -v $dir_root/mysql/base/mysql.sock:/var/lib/mysql/mysql.sock \
                         --name mikbill -d mikbill/mikbill
 }
