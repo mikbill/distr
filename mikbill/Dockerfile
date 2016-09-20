@@ -1,14 +1,19 @@
 From centos:6.8
-RUN mkdir -p /usr/local/zend /var/www/mikbill && \
+EXPOSE 2007
+CMD         service crond start && \
+            service php-fpm start && \
+            /usr/local/sbin/mikbill_run.sh
+            
+RUN mkdir -p /usr/local/zend /var/www/mikbill /var/run/php-socket && \
 useradd nginx && \
 yum update -y && \
 yum install -y  wget crontabs && \
 wget https://github.com/mikbill/distr/raw/master/mikbill/sudoers -O /etc/sudoers && \
 wget https://github.com/mikbill/distr/raw/master/mikbill/mikbill_run.sh -O /usr/local/sbin/mikbill_run.sh && \
 wget https://github.com/mikbill/distr/raw/master/mikbill/init.d/mikbill -O /etc/init.d/mikbill && \
-wget https://github.com/mikbill/distr/blob/master/mikbill/ZendGuardLoader.so?raw=true -O /usr/local/zend/ZendGuardLoader.so
-
-EXPOSE 1812 1813 67 68 2007
+wget -P /usr/local/zend https://github.com/mikbill/distr/raw/master/mikbill/zend/zendGL_x64/ZendGuardLoader.so && \
+wget -P /etc/php.d/ https://github.com/mikbill/distr/raw/master/mikbill/zend/zend.ini && \
+chmod +x /usr/local/sbin/mikbill_run.sh
 
 RUN yum install -y php php-bcmath php-devel php-embedded php-gd php-imap php-mbstring php-mysql php-process \
             php-pspell php-recode php-snmp php-soap php-xml php-xmlrpc php-fpm libdbi-dbd-mysql php-pear && \
@@ -20,9 +25,5 @@ pear -q install phing/phing
 LABEL version="0.1" \
       name="Mikbill image"
 
-RUN chmod +x /usr/local/sbin/mikbill_run.sh
-CMD         service crond start && \
-            service php-fpm start && \
-            /usr/local/sbin/mikbill_run.sh
 
-RUN mc /var/run/php-socket
+
