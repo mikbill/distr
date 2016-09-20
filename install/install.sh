@@ -6,8 +6,7 @@ dir_root="/opt/cloud"
 # Каталог для загрузки и с которого будет установка
 dir_download="/opt/install"
 # Загрузка библиотеки
-mkdir -p $dir_download
-wget https://raw.githubusercontent.com/mikbill/distr/master/install/install.lib -O $dir_download/install.lib
+wget -P $dir_download https://raw.githubusercontent.com/mikbill/distr/master/install/install.lib
 source $dir_download/install.lib
 
 install_docker
