@@ -19,6 +19,10 @@ pear -q install phing/phing
 
 LABEL version="0.1" \
       name="Mikbill image"
-      
+
 RUN chmod +x /usr/local/sbin/mikbill_run.sh
-CMD /usr/local/sbin/mikbill_run.sh
+CMD         service crond start && \
+            service php-fpm start && \
+            /usr/local/sbin/mikbill_run.sh
+
+RUN mc /var/run/php-socket
