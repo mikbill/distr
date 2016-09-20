@@ -135,3 +135,8 @@ curl -sSL https://get.docker.com/ | sh
 } 
 fi  
 }
+# Установка скрипта для свободных обновлений
+download_update_free (){
+wget -P $dir_root/mikbill/www/admin/sys/update https://github.com/mikbill/distr/raw/master/mikbill/update/mikbill_update.sh
+chmod +x $dir_root/mikbill/www/admin/sys/update/mikbill_update.sh
+}
