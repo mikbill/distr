@@ -9,7 +9,7 @@ dir_download="/opt/install"
 wget -P $dir_download https://raw.githubusercontent.com/mikbill/distr/master/install/install.lib
 source $dir_download/install.lib
 
-install_docker
+# install_docker
 
 # Загрузка файлов
 download (){
