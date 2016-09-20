@@ -52,7 +52,7 @@ docker run -p 80:80 -p 443:443  -v $dir_root/nginx/nginx.conf:/etc/nginx/nginx.c
                                 -v $dir_root/nginx/vhosts:/etc/nginx/conf.d \
                                 -v $dir_root/nginx/logs:/var/log/nginx \
                                 -v $dir_root/mikbill/www:/var/www/mikbill \
-                                -v $dir_root/mikbill/php-worker-socket:/var/run/php-worker-socket \
+                                -v $dir_root/mikbill/php-socket:/var/run/php-socket\
                                 --name nginx -d nginx
 }
 
@@ -81,9 +81,9 @@ docker start mysql
 install_mikbill (){
 docker rm -f mikbill
 rm -Rf $dir_root/mikbill
-mkdir -p $dir_root/mikbill
-cp -R $dir_download/mikbill $dir_root
 mkdir -p $dir_root/mikbill/log/php-fpm
+mkdir -p $dir_root/mikbill/php-socket
+cp -R $dir_download/mikbill $dir_root
 tar xzf $dir_root/mikbill/www/admin.tar.gz -C $dir_root/mikbill/www/
 tar xzf $dir_root/mikbill/www/stat.tar.gz -C $dir_root/mikbill/www/
 tar xzf $dir_root/mikbill/www/map.tar.gz -C $dir_root/mikbill/www/
@@ -96,7 +96,7 @@ docker run -p 2007:2007 -v $dir_root/mikbill/www:/var/www/mikbill \
                         -v $dir_root/mikbill/www.conf:/etc/php-fpm.d/www.conf \
                         -v $dir_root/mikbill/crontab:/etc/crontab \
                         -v $dir_root/mikbill/log/:/var/log/ \
-                        -v $dir_root/mikbill:/var/run/php-worker-socket \
+                        -v $dir_root/mikbill/php-socket:/var/run/php-socket/php-worker-socket \
                         --name mikbill -d mikbill/mikbill
 }
 
