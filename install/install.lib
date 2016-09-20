@@ -81,6 +81,7 @@ docker rm -f mikbill
 rm -Rf $dir_root/mikbill
 mkdir -p $dir_root/mikbill/log/php-fpm
 mkdir -p $dir_root/mikbill/php-socket
+touch $dir_root/mikbill/log/mikbill.log
 cp -R $dir_download/mikbill $dir_root
 tar xzf $dir_root/mikbill/www/admin.tar.gz -C $dir_root/mikbill/www/
 tar xzf $dir_root/mikbill/www/stat.tar.gz -C $dir_root/mikbill/www/
