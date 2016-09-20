@@ -1,8 +1,4 @@
 From centos:6.8
-CMD   service start crond \
-      service start php-fpm \
-      /usr/local/sbin/mikbill_run.sh
-
 RUN mkdir -p /usr/local/zend /var/www/mikbill && \
 useradd nginx && \
 yum update -y && \
@@ -23,3 +19,6 @@ pear -q install phing/phing
 
 LABEL version="0.1" \
       name="Mikbill image"
+      
+RUN chmod +x /usr/local/sbin/mikbill_run.sh
+CMD /usr/local/sbin/mikbill_run.sh
