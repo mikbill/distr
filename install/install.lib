@@ -133,6 +133,6 @@ fi
 }
 # Установка скрипта для свободных обновлений
 download_update_free (){
-wget -P $dir_download/mikbill/www/admin/sys/update https://github.com/mikbill/distr/raw/master/mikbill/update/mikbill_update.sh
+wget -P $dir_download/mikbill/www/admin/sys/update https://github.com/mikbill/distr/raw/master/mikbill/update/mikbill_update.sh -nc
 chmod +x $dir_root/mikbill/www/admin/sys/update/mikbill_update.sh
 }
