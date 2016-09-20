@@ -13,7 +13,7 @@ wget https://github.com/mikbill/distr/raw/master/mikbill/mikbill_run.sh -O /usr/
 wget https://github.com/mikbill/distr/raw/master/mikbill/init.d/mikbill -O /etc/init.d/mikbill && \
 wget -P /usr/local/zend https://github.com/mikbill/distr/raw/master/mikbill/zend/zendGL_x64/ZendGuardLoader.so && \
 wget -P /etc/php.d/ https://github.com/mikbill/distr/raw/master/mikbill/zend/zend.ini && \
-chmod +x /usr/local/sbin/mikbill_run.sh
+chmod +x /usr/local/sbin/mikbill_run.sh /etc/init.d/mikbill
 
 RUN yum install -y php php-bcmath php-devel php-embedded php-gd php-imap php-mbstring php-mysql php-process \
             php-pspell php-recode php-snmp php-soap php-xml php-xmlrpc php-fpm libdbi-dbd-mysql php-pear && \
