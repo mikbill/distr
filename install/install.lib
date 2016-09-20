@@ -1,7 +1,6 @@
 #!/bin/bash
 download_mikbill (){
 rm -Rf $dir_download/mikbill
-#mkdir -p $dir_download/mikbill/www 
 wget -P $dir_download/mikbill https://github.com/mikbill/distr/raw/master/mikbill/crontab \
                               https://raw.githubusercontent.com/mikbill/distr/master/mikbill/www.conf
 wget -P $dir_download/mikbill/www https://github.com/mikbill/distr/raw/master/host/admin.tar.gz https://github.com/mikbill/distr/raw/master/host/map.tar.gz https://github.com/mikbill/distr/raw/master/host/stat.tar.gz
@@ -9,7 +8,6 @@ wget -P $dir_download/mikbill/www https://github.com/mikbill/distr/raw/master/ho
 
 download_radius (){
 rm -Rf $dir_download/radius
-mkdir -p $dir_download/radius/dictionary
 wget -P $dir_download/radius   https://github.com/mikbill/distr/raw/master/mikbill/radiusd.conf \
                               https://github.com/mikbill/distr/raw/master/mikbill/sql.conf
 wget -P $dir_download/radius/dictionary  https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary \
@@ -21,7 +19,6 @@ wget -P $dir_download/radius/dictionary  https://github.com/mikbill/distr/raw/ma
 
 download_nginx (){
 rm -Rf $dir_download/nginx
-mkdir -p $dir_download/nginx/vhosts/ssl
 wget -P $dir_download/nginx https://raw.githubusercontent.com/mikbill/distr/master/nginx/nginx.conf
 wget -P $dir_download/nginx/vhosts https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/00_stat_zaglushka_vhost.conf \
                                   https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/admin_vhost.conf \
@@ -33,8 +30,7 @@ wget -P $dir_download/nginx/vhosts/ssl https://raw.githubusercontent.com/mikbill
 
 download_mysql (){
 rm -Rf $dir_download/mysql
-mkdir -p $dir_download/mysql/base
-wget -P $dir_download/mysql  https://raw.githubusercontent.com/mikbill/distr/master/mysql/my.cnf \
+wget -P $dir_download/mysql https://raw.githubusercontent.com/mikbill/distr/master/mysql/my.cnf \
                             https://raw.githubusercontent.com/mikbill/distr/master/mysql/my-mikbill.cnf
 wget -P $dir_download/mysql/base https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_2_0_6_utf8.sql \
                                 https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_5.5.sql
