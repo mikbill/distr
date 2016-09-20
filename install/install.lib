@@ -85,6 +85,7 @@ cp -R $dir_download/mikbill $dir_root
 tar xzf $dir_root/mikbill/www/admin.tar.gz -C $dir_root/mikbill/www/
 tar xzf $dir_root/mikbill/www/stat.tar.gz -C $dir_root/mikbill/www/
 tar xzf $dir_root/mikbill/www/map.tar.gz -C $dir_root/mikbill/www/
+rm -f $dir_root/mikbill/www/admin.tar.gz $dir_root/mikbill/www/stat.tar.gz $dir_root/mikbill/www/map.tar.gz
 
 sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/mikbill/www/admin/app/etc/config.xml
 sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/mikbill/www/stat/app/etc/config.xml
