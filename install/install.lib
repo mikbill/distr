@@ -52,7 +52,7 @@ docker run -p 80:80 -p 443:443  -v $dir_root/nginx/nginx.conf:/etc/nginx/nginx.c
                                 -v $dir_root/nginx/vhosts:/etc/nginx/conf.d \
                                 -v $dir_root/nginx/logs:/var/log/nginx \
                                 -v $dir_root/mikbill/www:/var/www/mikbill \
-                                -v $dir_root/mikbill/php-socket:/var/run
+                                -v $dir_root/mikbill/php-socket:/var/run \
                                 --name nginx -d nginx
 }
 
