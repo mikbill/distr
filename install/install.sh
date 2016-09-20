@@ -28,7 +28,7 @@ install_mikbill
 install_radius
 }
 install
-# Установка скрипта для свободных обновлений
+# Загрузка скрипта для свободных обновлений
 download_update_free
 # Удаление установочных файлов
 #install_clear
