@@ -37,6 +37,7 @@ wget -P $dir_download/mysql/base https://raw.githubusercontent.com/mikbill/distr
 }
 
 download_control (){
+rm -Rf $dir_download/control
 wget -P $dir_download/control https://github.com/mikbill/distr/raw/master/control/start.sh
 chmod +x $dir_download/control/start.sh
 }
