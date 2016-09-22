@@ -28,6 +28,7 @@ install_mikbill
 install_radius
 install_control
 }
+#debug
 install
 
 # Удаление установочных файлов
