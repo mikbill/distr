@@ -17,6 +17,7 @@ download_mysql
 download_nginx
 download_mikbill
 download_radius
+download_control
 }
 download
 # Установка
@@ -25,6 +26,7 @@ install_mysql
 install_nginx
 install_mikbill
 install_radius
+install_control
 }
 install
 
