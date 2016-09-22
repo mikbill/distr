@@ -95,8 +95,9 @@ tar xzf $dir_download/mikbill/www/admin.tar.gz -C $dir_root/mikbill/www/
 tar xzf $dir_download/mikbill/www/stat.tar.gz -C $dir_root/mikbill/www/
 tar xzf $dir_download/mikbill/www/map.tar.gz -C $dir_root/mikbill/www/
 
+echo "$update"
 cp $dir_dowload/mikbill/$update $dir_root/mikbill/www/admin/sys/update/$update
-mv $dir_dowload/mikbill/$update $dir_root/mikbill/www/admin/sys/update/mikbill_update.sh
+mv $dir_root/mikbill/www/admin/sys/update/$update $dir_root/mikbill/www/admin/sys/update/mikbill_update.sh
 
 sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/mikbill/www/admin/app/etc/config.xml
 sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/mikbill/www/stat/app/etc/config.xml
