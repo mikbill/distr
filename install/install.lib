@@ -6,7 +6,7 @@ wget -P $dir_download/mikbill https://github.com/mikbill/distr/raw/master/mikbil
 wget -P $dir_download/mikbill/www https://github.com/mikbill/distr/raw/master/host/admin.tar.gz https://github.com/mikbill/distr/raw/master/host/map.tar.gz https://github.com/mikbill/distr/raw/master/host/stat.tar.gz
 
 wget -P $dir_download/mikbill/www/ https://github.com/mikbill/distr/raw/master/mikbill/update/mikbill_update.sh
-chmod +x $dir_dowload/mikbill/www/mikbill_update.sh
+chmod +x $dir_download/mikbill/www/mikbill_update.sh
 }
 
 download_radius (){
