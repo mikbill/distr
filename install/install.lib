@@ -53,7 +53,7 @@ docker run -p 80:80 -p 443:443  -v $dir_root/nginx/nginx.conf:/etc/nginx/nginx.c
                                 -v $dir_root/nginx/logs:/var/log/nginx \
                                 -v $dir_root/mikbill/www:/var/www/mikbill \
                                 -v $dir_root/mikbill/php-socket:/var/run/ \
-                                --name nginx -d nginx
+                                --name nginx $mode nginx
 }
 
 install_mysql (){
@@ -64,7 +64,7 @@ cp -R $dir_download/mysql $dir_root
 
 docker run -p 3306:3306 -v $dir_root/mysql/my.cnf:/etc/mysql/conf.d/my.cnf \
                         -v $dir_root/mysql/base:/var/lib/mysql \
-                        --name mysql -e MYSQL_ROOT_PASSWORD=$mysql_root_passwd -d mysql:5.5
+                        --name mysql -e MYSQL_ROOT_PASSWORD=$mysql_root_passwd $mode mysql:5.5
 sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/mysql/base/mikbill_5.5.sql
 
 sleep 20
@@ -100,7 +100,7 @@ docker run -p 2007:2007 -v $dir_root/mikbill/www:/var/www/mikbill \
                         -v $dir_root/mikbill/log/:/var/log/ \
                         -v $dir_root/mikbill/php-socket:/var/run/php-socket \
                         -v $dir_root/mysql/base:/var/lib/mysql \
-                        --name mikbill -d mikbill/mikbill
+                        --name mikbill $mode mikbill/mikbill
 }
 
 install_radius (){
@@ -113,7 +113,7 @@ docker run -p 1812:1812 -p 1813:1813 -p 67:67 -p 68:68  -v $dir_root/radius/radi
                                                         -v $dir_root/radius/sql.conf:/etc/raddb/sql.conf \
                                                         -v $dir_root/radius/dictionary:/usr/share/freeradius \
                                                         -v $dir_root/mysql/base/mysql.sock:/var/lib/mysql/mysql.sock \
-                                                        --name radius -d mikbill/radius
+                                                        --name radius $mode mikbill/radius
 
 sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/radius/sql.conf
 docker exec radius sh -c "exec mv /tmp/freeradius/* /usr/share/freeradius/"
@@ -146,5 +146,10 @@ fi
 download_update_free (){
 wget -O $dir_download/mikbill/www/admin/sys/update/mikbill_update.sh https://github.com/mikbill/distr/raw/master/mikbill/update/mikbill_update.sh
 chmod +x $dir_root/mikbill/www/admin/sys/update/mikbill_update.sh
+}
+
+mode="-d"
+debug (){
+mode="-t -i"
 }
 
