@@ -65,6 +65,7 @@ mkdir -p  $dir_root/mikbill/log/php-fpm \
 touch $dir_root/mikbill/log/mikbill.log
 cp $dir_download/mikbill/crontab $dir_root/mikbill/crontab
 cp $dir_download/mikbill/www.conf $dir_root/mikbill/www.conf
+cp $dir_download/mikbill/php.ini $dir_root/mikbill/php.ini
 
 tar xzf $dir_download/mikbill/www/admin.tar.gz -C $dir_root/mikbill/www/
 tar xzf $dir_download/mikbill/www/stat.tar.gz -C $dir_root/mikbill/www/
