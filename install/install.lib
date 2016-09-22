@@ -4,8 +4,8 @@ rm -f $dir_download/mikbill/*
 wget -P $dir_download/mikbill https://github.com/mikbill/distr/raw/master/mikbill/crontab \
                               https://raw.githubusercontent.com/mikbill/distr/master/mikbill/www.conf \
                               https://github.com/mikbill/distr/raw/master/mikbill/php.ini
-wget -P $dir_download/mikbill/www/ https://github.com/mikbill/distr/raw/master/mikbill/update/mikbill_update.sh
-chmod +x $dir_download/mikbill/www/mikbill_update.sh
+wget -P $dir_download/mikbill https://github.com/mikbill/distr/raw/master/mikbill/update/mikbill_update.sh
+chmod +x $dir_download/mikbill/mikbill_update.sh
 }
 
 download_mikbill_www (){
@@ -56,6 +56,37 @@ wget -P $dir_download/control https://github.com/mikbill/distr/raw/master/contro
 chmod +x $dir_download/control/*
 }
 
+install_mikbill (){
+docker rm -f mikbill
+rm -Rf $dir_root/mikbill
+mkdir -p  $dir_root/mikbill/log/php-fpm \
+          $dir_root/mikbill/php-socket \
+          $dir_root/mikbill/www
+touch $dir_root/mikbill/log/mikbill.log
+cp $dir_download/mikbill/crontab $dir_root/mikbill/crontab
+cp $dir_download/mikbill/www.conf $dir_root/mikbill/www.conf
+
+tar xzf $dir_download/mikbill/www/admin.tar.gz -C $dir_root/mikbill/www/
+tar xzf $dir_download/mikbill/www/stat.tar.gz -C $dir_root/mikbill/www/
+tar xzf $dir_download/mikbill/www/map.tar.gz -C $dir_root/mikbill/www/
+
+cp $dir_download/mikbill/$update $dir_root/mikbill/www/admin/sys/update/$update
+mv $dir_root/mikbill/www/admin/sys/update/$update $dir_root/mikbill/www/admin/sys/update/mikbill_update.sh
+
+sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/mikbill/www/admin/app/etc/config.xml
+sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/mikbill/www/stat/app/etc/config.xml
+sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/mikbill/www/map/app/etc/config.xml
+
+docker run -p 2007:2007 -v $dir_root/mikbill/www:/var/www/mikbill \
+                        -v $dir_root/mikbill/www.conf:/etc/php-fpm.d/www.conf \
+                        -v $dir_root/mikbill/php.ini:/etc/php.ini \
+                        -v $dir_root/mikbill/crontab:/etc/crontab \
+                        -v $dir_root/mikbill/log/:/var/log/ \
+                        -v $dir_root/mikbill/php-socket:/var/run/php-socket \
+                        -v $dir_root/mysql/base:/var/lib/mysql \
+                        --name mikbill $mode mikbill/mikbill
+}
+
 install_nginx (){
 docker rm -f nginx
 rm -Rf $dir_root/nginx
@@ -91,36 +122,6 @@ rm -f $dir_root/mysql/base/ib_logfile0 $dir_root/mysql/base/ib_logfile1 $dir_roo
 docker start mysql
 }
 
-install_mikbill (){
-docker rm -f mikbill
-rm -Rf $dir_root/mikbill
-mkdir -p  $dir_root/mikbill/log/php-fpm \
-          $dir_root/mikbill/php-socket \
-          $dir_root/mikbill/www
-touch $dir_root/mikbill/log/mikbill.log
-cp $dir_download/mikbill/crontab $dir_root/mikbill/crontab
-cp $dir_download/mikbill/www.conf $dir_root/mikbill/www.conf
-
-tar xzf $dir_download/mikbill/www/admin.tar.gz -C $dir_root/mikbill/www/
-tar xzf $dir_download/mikbill/www/stat.tar.gz -C $dir_root/mikbill/www/
-tar xzf $dir_download/mikbill/www/map.tar.gz -C $dir_root/mikbill/www/
-
-cp $dir_download/mikbill/www/$update $dir_root/mikbill/www/admin/sys/update/$update
-mv $dir_root/mikbill/www/admin/sys/update/$update $dir_root/mikbill/www/admin/sys/update/mikbill_update.sh
-
-sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/mikbill/www/admin/app/etc/config.xml
-sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/mikbill/www/stat/app/etc/config.xml
-sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/mikbill/www/map/app/etc/config.xml
-
-docker run -p 2007:2007 -v $dir_root/mikbill/www:/var/www/mikbill \
-                        -v $dir_root/mikbill/www.conf:/etc/php-fpm.d/www.conf \
-                        -v $dir_root/mikbill/php.ini:/etc/php.ini \
-                        -v $dir_root/mikbill/crontab:/etc/crontab \
-                        -v $dir_root/mikbill/log/:/var/log/ \
-                        -v $dir_root/mikbill/php-socket:/var/run/php-socket \
-                        -v $dir_root/mysql/base:/var/lib/mysql \
-                        --name mikbill $mode mikbill/mikbill
-}
 
 install_radius (){
 docker rm -f radius
