@@ -17,6 +17,7 @@ download (){
 download_mysql
 download_nginx
 download_mikbill
+download_mikbill_www
 download_radius
 download_control
 }
