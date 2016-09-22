@@ -36,6 +36,11 @@ wget -P $dir_download/mysql/base https://raw.githubusercontent.com/mikbill/distr
                                 https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_5.5.sql
 }
 
+download_control (){
+wget -P $dir_install/control https://github.com/mikbill/distr/raw/master/control/start.sh
+chmod +x $dir_install/start.sh
+}
+
 install_nginx (){
 docker rm -f nginx
 rm -Rf $dir_root/nginx
@@ -114,6 +119,11 @@ docker exec radius sh -c "exec mv /tmp/freeradius/* /usr/share/freeradius/"
 docker restart radius
 }
 
+install_control (){
+mkdir -p $dir_root/control
+cp $dir_install/control/start.sh $dir_root/control/start.sh
+}
+
 docker_clear (){
 docker rm -f $(docker ps -a -q) && docker rmi -f $(docker images -q)
 }
@@ -136,3 +146,4 @@ download_update_free (){
 wget -O $dir_download/mikbill/www/admin/sys/update/mikbill_update.sh https://github.com/mikbill/distr/raw/master/mikbill/update/mikbill_update.sh
 chmod +x $dir_root/mikbill/www/admin/sys/update/mikbill_update.sh
 }
+
