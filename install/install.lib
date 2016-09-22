@@ -42,8 +42,12 @@ wget -P $dir_download/mysql/base  https://raw.githubusercontent.com/mikbill/dist
 download_control (){
 rm -Rf $dir_download/control
 wget -P $dir_download/control https://github.com/mikbill/distr/raw/master/control/start.sh \
-                              https://github.com/mikbill/distr/raw/master/control/start_updates.sh
-chmod +x $dir_download/control/start.sh $dir_download/control/start_updates.sh
+                              https://github.com/mikbill/distr/raw/master/control/start_updates.sh \
+                              https://github.com/mikbill/distr/raw/master/control/attach_mikbill \
+                              https://github.com/mikbill/distr/raw/master/control/attach_mysql \
+                              https://github.com/mikbill/distr/raw/master/control/attach_nginx \
+                              https://github.com/mikbill/distr/raw/master/control/attach_radius
+chmod +x $dir_download/control/*
 }
 
 install_nginx (){
