@@ -71,7 +71,6 @@ docker run -p 3306:3306 -v $dir_root/mysql/my.cnf:/etc/mysql/conf.d/my.cnf \
                         --name mysql -e MYSQL_ROOT_PASSWORD=$mysql_root_passwd $mode mysql:5.5
 sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/mysql/base/mikbill_5.5.sql
 
-sleep 20
 docker exec mysql sh -c "exec mysql -uroot -p$mysql_root_passwd < /var/lib/mysql/mikbill_5.5.sql"
 docker exec mysql sh -c "exec mysql -uroot -p$mysql_root_passwd mikbill < /var/lib/mysql/mikbill_2_0_6_utf8.sql"
 
