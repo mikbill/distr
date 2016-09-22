@@ -4,6 +4,9 @@ rm -Rf $dir_download/mikbill
 wget -P $dir_download/mikbill https://github.com/mikbill/distr/raw/master/mikbill/crontab \
                               https://raw.githubusercontent.com/mikbill/distr/master/mikbill/www.conf
 wget -P $dir_download/mikbill/www https://github.com/mikbill/distr/raw/master/host/admin.tar.gz https://github.com/mikbill/distr/raw/master/host/map.tar.gz https://github.com/mikbill/distr/raw/master/host/stat.tar.gz
+
+wget -P $dir_download/mikbill/www/ https://github.com/mikbill/distr/raw/master/mikbill/update/mikbill_update.sh
+chmod +x $dir_dowload/mikbill/www/mikbill_update.sh
 }
 
 download_radius (){
@@ -149,8 +152,7 @@ fi
 }
 # Загрузка скрипта для свободных обновлений
 download_update_free (){
-wget -O $dir_download/mikbill/www/mikbill_update.sh https://github.com/mikbill/distr/raw/master/mikbill/update/mikbill_update.sh
-chmod +x $dir_root/mikbill/www/mikbill_update.sh
+
 }
 
 mode="-d"
