@@ -1,6 +1,5 @@
 #!/bin/bash
 download_mikbill (){
-rm -Rf $dir_download/mikbill
 wget -P $dir_download/mikbill https://github.com/mikbill/distr/raw/master/mikbill/crontab \
                               https://raw.githubusercontent.com/mikbill/distr/master/mikbill/www.conf \
                               https://github.com/mikbill/distr/raw/master/mikbill/php.ini
