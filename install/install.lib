@@ -10,7 +10,7 @@ download_radius (){
 rm -Rf $dir_download/radius
 wget -P $dir_download/radius   https://github.com/mikbill/distr/raw/master/mikbill/radiusd.conf \
                               https://github.com/mikbill/distr/raw/master/mikbill/sql.conf
-wget -P $dir_download/radius/dictionary  https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary \
+wget -P $dir_download/radius/dictionary https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary \
                                         https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.dhcp \
                                         https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.dlink \
                                         https://github.com/mikbill/distr/raw/master/mikbill/dictonary/dictionary.mikrotik \
@@ -20,20 +20,20 @@ wget -P $dir_download/radius/dictionary  https://github.com/mikbill/distr/raw/ma
 download_nginx (){
 rm -Rf $dir_download/nginx
 wget -P $dir_download/nginx https://raw.githubusercontent.com/mikbill/distr/master/nginx/nginx.conf
-wget -P $dir_download/nginx/vhosts https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/00_stat_zaglushka_vhost.conf \
-                                  https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/admin_vhost.conf \
-                                  https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/map_vhost.conf \
-                                  https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/stat_vhost.conf
-wget -P $dir_download/nginx/vhosts/ssl https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.crt \
-                                      https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.key
+wget -P $dir_download/nginx/vhosts  https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/00_stat_zaglushka_vhost.conf \
+                                    https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/admin_vhost.conf \
+                                    https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/map_vhost.conf \
+                                    https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/stat_vhost.conf
+wget -P $dir_download/nginx/vhosts/ssl  https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.crt \
+                                        https://raw.githubusercontent.com/mikbill/distr/master/nginx/conf.d/ssl/ca.key
 }
 
 download_mysql (){
 rm -Rf $dir_download/mysql
 wget -P $dir_download/mysql https://raw.githubusercontent.com/mikbill/distr/master/mysql/my.cnf \
                             https://raw.githubusercontent.com/mikbill/distr/master/mysql/my-mikbill.cnf
-wget -P $dir_download/mysql/base https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_2_0_6_utf8.sql \
-                                https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_5.5.sql
+wget -P $dir_download/mysql/base  https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_2_0_6_utf8.sql \
+                                  https://raw.githubusercontent.com/mikbill/distr/master/mysql/mikbill_5.5.sql
 }
 
 download_control (){
