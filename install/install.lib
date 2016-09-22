@@ -84,8 +84,8 @@ docker start mysql
 install_mikbill (){
 docker rm -f mikbill
 rm -Rf $dir_root/mikbill
-mkdir -p  $dir_root/mikbill/log/php-fpm
-          $dir_root/mikbill/php-socket
+mkdir -p  $dir_root/mikbill/log/php-fpm \
+          $dir_root/mikbill/php-socket \
           $dir_root/mikbill/www
 touch $dir_root/mikbill/log/mikbill.log
 cp $dir_download/mikbill/crontab $dir_root/mikbill/crontab
