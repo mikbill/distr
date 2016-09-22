@@ -1,5 +1,6 @@
 #!/bin/bash
 download_mikbill (){
+rm -f $dir_download/mikbill/*
 wget -P $dir_download/mikbill https://github.com/mikbill/distr/raw/master/mikbill/crontab \
                               https://raw.githubusercontent.com/mikbill/distr/master/mikbill/www.conf \
                               https://github.com/mikbill/distr/raw/master/mikbill/php.ini
@@ -8,6 +9,7 @@ chmod +x $dir_download/mikbill/www/mikbill_update.sh
 }
 
 download_mikbill_www (){
+rm -f $dir_download/mikbill/www/*
 wget -P $dir_download/mikbill/www https://github.com/mikbill/distr/raw/master/host/admin.tar.gz \
                                   https://github.com/mikbill/distr/raw/master/host/map.tar.gz \ 
                                   https://github.com/mikbill/distr/raw/master/host/stat.tar.gz
