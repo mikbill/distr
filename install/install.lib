@@ -131,6 +131,7 @@ docker restart radius
 install_control (){
 mkdir -p $dir_root/control
 cp $dir_download/control/start.sh $dir_root/control/start.sh
+cp $dir_download/control/start_updates.sh $dir_root/control/start_updates.sh
 }
 
 docker_clear (){
