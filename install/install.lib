@@ -150,10 +150,6 @@ curl -sSL https://get.docker.com/ | sh
 } 
 fi  
 }
-# Загрузка скрипта для свободных обновлений
-download_update_free (){
-
-}
 
 mode="-d"
 debug (){
