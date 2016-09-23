@@ -145,8 +145,11 @@ docker restart radius
 
 install_control (){
 mkdir -p $dir_root/control
-cp $dir_download/control/start.sh $dir_root/control/start.sh
-cp $dir_download/control/start_updates.sh $dir_root/control/start_updates.sh
+cp $dir_download/control/* $dir_root/control
+find $dir_root/control -type f -exec sed -i -r "s/MIKBILL/$container_mikbill/g" {} \;
+find $dir_root/control -type f -exec sed -i -r "s/MYSQL/$container_mysql/g" {} \;
+find $dir_root/control -type f -exec sed -i -r "s/RADIUS/$container_radius/g" {} \;
+find $dir_root/control -type f -exec sed -i -r "s/NGINX/$container_nginx/g" {} \;
 }
 
 docker_clear (){
