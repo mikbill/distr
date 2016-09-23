@@ -1,3 +1,2 @@
 #!/bin/bash
-name="nginx"
-sudo docker exec -ti $name /bin/bash
+sudo docker exec -ti NGINX /bin/bash
