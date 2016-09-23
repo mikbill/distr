@@ -1,3 +1,2 @@
 #!/bin/bash
-name="mysql"
-sudo docker exec -ti $name /bin/bash
+sudo docker exec -ti MYSQL /bin/bash
