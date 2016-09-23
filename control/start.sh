@@ -1,5 +1,5 @@
 #!/bin/bash
-docker restart mysql
-docker restart radius
-docker restart mikbill
-docker restart nginx
+docker restart MYSQL
+docker restart RADIUS
+docker restart MIKBILL
+docker restart NGINX
