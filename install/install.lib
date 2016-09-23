@@ -110,7 +110,7 @@ cp -R $dir_download/mysql $dir_root
 
 docker run -p 3306:3306 -v $dir_root/mysql/my.cnf:/etc/mysql/conf.d/my.cnf \
                         -v $dir_root/mysql/base:/var/lib/mysql \
-                        --name $container_mysql -e MYSQL_ROOT_PASSWORD=$mysql_root_passwd $mode mysql:5.5
+                        --name $container_mysql -e MYSQL_ROOT_PASSWORD=$mysql_root_passwd $mode mikbill/mysql
 sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/mysql/base/mikbill_5.5.sql
 sleep 20
 docker exec $container_mysql mysqladmin password $mysql_root_passwd
