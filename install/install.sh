@@ -5,6 +5,11 @@ mysql_mikbill_passwd="passwd"
 dir_root="/opt/cloud"
 # Каталог для загрузки и с которого будет установка
 dir_download="/opt/install"
+
+container_mikbill="mikbill"
+container_mysql="mysql"
+container_nginx="nginx"
+container_radius="radius"
 # Загрузка библиотеки
 mkdir $dir_download 
 wget -O $dir_download/install.lib https://raw.githubusercontent.com/mikbill/distr/master/install/install.lib
@@ -30,7 +35,6 @@ install_mikbill
 install_radius
 install_control
 }
-# Включение дебаг режима установки (установка только одного контейнера за раз) 
 #debug
 # Установка скрипта платных обновлений
 # paid_updates
