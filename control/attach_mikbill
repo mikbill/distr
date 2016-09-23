@@ -1,3 +1,2 @@
 #!/bin/bash
-name="mikbill"
-sudo docker exec -ti $name /bin/bash
+sudo docker exec -ti MIKBILL /bin/bash
