@@ -1,5 +1,5 @@
 #!/bin/sh
-
+cd /var/www/mikbill/admin/sys/update
 echo "Start UPDATER SOFT!"
 
 VERSION_UPD="131020121779"
@@ -207,7 +207,7 @@ if [ "$TEST"=="0" ];
 then
     $APP_TAR xzf ./$UPDATE_FILE -C $MIKBILL_PATH_LINUX_INST
     $APP_CHOWN -R apache:apache $MIKBILL_PATH_LINUX
-    do_rhel_reload
+    #do_rhel_reload
 fi
 IS_CENTOS_6=`$APP_CAT /etc/redhat-release|$APP_GREP 6.`
 if [ "$IS_CENTOS_6"=="" ];
