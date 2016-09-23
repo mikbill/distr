@@ -85,7 +85,7 @@ docker run -p 2007:2007 -v $dir_root/mikbill/www:/var/www/mikbill \
                         -v $dir_root/mikbill/log/:/var/log/ \
                         -v $dir_root/mikbill/php-socket:/var/run/php-socket \
                         -v $dir_root/mysql/base:/var/lib/mysql \
-                        --name mikbill $mode mikbill/mikbill
+                        --name $container_mikbill $mode mikbill/mikbill
 }
 
 install_nginx (){
@@ -99,7 +99,7 @@ docker run -p 80:80 -p 443:443  -v $dir_root/nginx/nginx.conf:/etc/nginx/nginx.c
                                 -v $dir_root/nginx/logs:/var/log/nginx \
                                 -v $dir_root/mikbill/www:/var/www/mikbill \
                                 -v $dir_root/mikbill/php-socket:/var/run/ \
-                                --name nginx $mode nginx
+                                --name $container_nginx $mode nginx
 }
 
 install_mysql (){
@@ -110,7 +110,7 @@ cp -R $dir_download/mysql $dir_root
 
 docker run -p 3306:3306 -v $dir_root/mysql/my.cnf:/etc/mysql/conf.d/my.cnf \
                         -v $dir_root/mysql/base:/var/lib/mysql \
-                        --name mysql -e MYSQL_ROOT_PASSWORD=$mysql_root_passwd $mode mysql:5.5
+                        --name $container_mysql -e MYSQL_ROOT_PASSWORD=$mysql_root_passwd $mode mysql:5.5
 sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/mysql/base/mikbill_5.5.sql
 sleep 30
 docker exec mysql sh -c "exec mysql -uroot -p$mysql_root_passwd < /var/lib/mysql/mikbill_5.5.sql"
@@ -134,7 +134,7 @@ docker run -p 1812:1812 -p 1813:1813 -p 67:67 -p 68:68  -v $dir_root/radius/radi
                                                         -v $dir_root/radius/sql.conf:/etc/raddb/sql.conf \
                                                         -v $dir_root/radius/dictionary:/usr/share/freeradius \
                                                         -v $dir_root/mysql/base/mysql.sock:/var/lib/mysql/mysql.sock \
-                                                        --name radius $mode mikbill/radius
+                                                        --name $container_radius $mode mikbill/radius
 
 sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/radius/sql.conf
 docker exec radius sh -c "exec mv /tmp/freeradius/* /usr/share/freeradius/"
