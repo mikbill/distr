@@ -57,7 +57,7 @@ chmod +x $dir_download/control/*
 }
 
 install_mikbill (){
-docker rm -f mikbill
+docker rm -f $container_mikbill
 rm -Rf $dir_root/mikbill
 mkdir -p  $dir_root/mikbill/log/php-fpm \
           $dir_root/mikbill/php-socket \
@@ -89,7 +89,7 @@ docker run -p 2007:2007 -v $dir_root/mikbill/www:/var/www/mikbill \
 }
 
 install_nginx (){
-docker rm -f nginx
+docker rm -f $container_nginx
 rm -Rf $dir_root/nginx
 mkdir -p $dir_root/nginx/logs
 cp -R $dir_download/nginx $dir_root
@@ -103,7 +103,7 @@ docker run -p 80:80 -p 443:443  -v $dir_root/nginx/nginx.conf:/etc/nginx/nginx.c
 }
 
 install_mysql (){
-docker rm -f mysql
+docker rm -f $container_mysql
 rm -Rf $dir_root/mysql
 mkdir -p $dir_root/mysql
 cp -R $dir_download/mysql $dir_root
@@ -113,21 +113,21 @@ docker run -p 3306:3306 -v $dir_root/mysql/my.cnf:/etc/mysql/conf.d/my.cnf \
                         --name $container_mysql -e MYSQL_ROOT_PASSWORD=$mysql_root_passwd $mode mysql:5.5
 sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/mysql/base/mikbill_5.5.sql
 sleep 20
-docker exec mysql mysqladmin password $mysql_root_passwd
+docker exec $container_mysql mysqladmin password $mysql_root_passwd
 
-docker exec mysql sh -c "exec mysql -uroot -p$mysql_root_passwd < /var/lib/mysql/mikbill_5.5.sql"
-docker exec mysql sh -c "exec mysql -uroot -p$mysql_root_passwd mikbill < /var/lib/mysql/mikbill_2_0_6_utf8.sql"
+docker exec $container_mysql sh -c "exec mysql -uroot -p$mysql_root_passwd < /var/lib/mysql/mikbill_5.5.sql"
+docker exec $container_mysql sh -c "exec mysql -uroot -p$mysql_root_passwd mikbill < /var/lib/mysql/mikbill_2_0_6_utf8.sql"
 
-docker stop mysql
+docker stop $container_mysql
 rm $dir_root/mysql/my.cnf
 mv $dir_root/mysql/my-mikbill.cnf $dir_root/mysql/my.cnf
 rm -f $dir_root/mysql/base/ib_logfile0 $dir_root/mysql/base/ib_logfile1 $dir_root/mysql/base/ibdata1
-docker start mysql
+docker start $container_mysql
 }
 
 
 install_radius (){
-docker rm -f radius
+docker rm -f $container_radius
 rm -Rf $dir_root/radius
 mkdir -p $dir_root/radius/dictionary
 cp -R $dir_download/radius $dir_root
@@ -139,8 +139,8 @@ docker run -p 1812:1812 -p 1813:1813 -p 67:67 -p 68:68  -v $dir_root/radius/radi
                                                         --name $container_radius $mode mikbill/radius
 
 sed -i "s/MIKBILLPASS/$mysql_mikbill_passwd/g" $dir_root/radius/sql.conf
-docker exec radius sh -c "exec mv /tmp/freeradius/* /usr/share/freeradius/"
-docker restart radius
+docker exec $container_radius sh -c "exec mv /tmp/freeradius/* /usr/share/freeradius/"
+docker restart $container_radius
 }
 
 install_control (){
