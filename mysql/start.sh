@@ -1,5 +1,5 @@
 while true
 do
-mysqld_safe --bind-address=0.0.0.0
+service mysqld start
 sleep 5
 done
