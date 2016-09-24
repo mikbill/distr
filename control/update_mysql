@@ -1,0 +1,2 @@
+#!/bin/bash
+docker exec mikbill sh -c "cd /var/www/mikbill/admin/sys/update && ./mb_sql_upd.sh"
