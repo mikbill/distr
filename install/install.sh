@@ -43,4 +43,6 @@ install
 # Удаление установочных файлов
 #install_clear
 
+# update_mikbill
+
 docker ps
