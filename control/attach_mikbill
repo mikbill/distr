@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo docker exec -ti MIKBILL /bin/bash
+docker exec -ti MIKBILL /bin/bash
