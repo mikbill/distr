@@ -180,6 +180,5 @@ update=piaid_mikbill_update.sh
 }
 
 update_mikbill (){
-$dir_root/control/update.sh  
-}
+$dir_root/control/start_updates.sh
 }
