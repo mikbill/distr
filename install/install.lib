@@ -178,3 +178,8 @@ update=mikbill_update.sh
 paid_updates (){
 update=piaid_mikbill_update.sh
 }
+
+update_mikbill (){
+$dir_root/control/update.sh  
+}
+}
