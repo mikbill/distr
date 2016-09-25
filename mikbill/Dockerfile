@@ -5,8 +5,10 @@ RUN mkdir -p /usr/local/zend /var/www/mikbill /var/run/php-socket \
 && useradd nginx \
 && yum update -y \
 && yum install -y  wget \
+
 && gpg --quiet --with-fingerprint /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 \
-&& crontabs \
+&& yum install -y crontabs \
+
 && wget https://github.com/mikbill/distr/raw/master/mikbill/sudoers -O /etc/sudoers \
 && wget https://github.com/mikbill/distr/raw/master/mikbill/mikbill_run.sh -O /usr/local/sbin/mikbill_run.sh \
 && wget https://github.com/mikbill/distr/raw/master/mikbill/init.d/mikbill -O /etc/init.d/mikbill \
