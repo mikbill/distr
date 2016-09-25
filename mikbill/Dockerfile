@@ -10,7 +10,7 @@ RUN mkdir -p /usr/local/zend /var/www/mikbill /var/run/php-socket \
 && yum install -y crontabs \
 
 && wget -P /etc https://github.com/mikbill/distr/raw/master/mikbill/sudoers \
-&& wget -P https://github.com/mikbill/distr/raw/master/mikbill/zend/php-5.4.x_x64/ZendGuardLoader.so \
+&& wget -P /usr/local/zend  https://github.com/mikbill/distr/raw/master/mikbill/zend/php-5.4.x_x64/ZendGuardLoader.so \
 && wget -P /etc/php.d/ https://github.com/mikbill/distr/raw/master/mikbill/zend/zend.ini \
 
 RUN yum install -y php-cli php-bcmath php-devel php-embedded php-gd php-imap php-mbstring php-mysql php-process \
