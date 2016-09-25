@@ -9,9 +9,7 @@ RUN mkdir -p /usr/local/zend /var/www/mikbill /var/run/php-socket \
 && gpg --quiet --with-fingerprint /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 \
 && yum install -y crontabs \
 
-&& wget https://github.com/mikbill/distr/raw/master/mikbill/sudoers -O /etc/sudoers \
-&& wget https://github.com/mikbill/distr/raw/master/mikbill/mikbill_run.sh -O /usr/local/sbin/mikbill_run.sh \
-&& wget https://github.com/mikbill/distr/raw/master/mikbill/init.d/mikbill -O /etc/init.d/mikbill \
+&& wget -P /etc https://github.com/mikbill/distr/raw/master/mikbill/sudoers \
 && wget -P https://github.com/mikbill/distr/raw/master/mikbill/zend/php-5.4.x_x64/ZendGuardLoader.so \
 && wget -P /etc/php.d/ https://github.com/mikbill/distr/raw/master/mikbill/zend/zend.ini \
 && chmod +x /usr/local/sbin/mikbill_run.sh /etc/init.d/mikbill
