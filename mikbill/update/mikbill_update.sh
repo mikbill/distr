@@ -40,37 +40,6 @@ APP_TAR=`which tar`
 APP_DATE=`which date`
 APP_CP=`which cp`
 
-check_php_version () {
-#Проверить версию PHP и изменить ссылку для загрузки
-#подразумевается что уже система нормально установлена
-
-case $SYSTEM in
-Linux)
-    PHPVER=`$APP_PHP -i|$APP_GREP PHP |$APP_GREP Version |$APP_AWK {'print $4'}|$APP_SED 's/\./ /g' |$APP_SED -n 1p |$APP_AWK {'print $2'}`
-    ;;
-FreeBSD)
-    PHPVER=`$APP_PHP -i|$APP_GREP PHP |$APP_GREP Version |$APP_AWK '{print $4}'|$APP_SED 's/\./ /g' |$APP_SED -n 1p |$APP_AWK '{print $2}'`
-    ;;
-esac
-
-if [ "$PHPVER" -eq "2" ];
-then
-    echo "PHP 5.2 detected"
-    UPDATE_URL="http://update2free.mikbill.ru/52/"
-else
-    if [ "$PHPVER" -eq "3" ];
-    then
-	echo "PHP 5.3 detected"
-        UPDATE_URL="http://update2free.mikbill.ru/53/"
-    else
-	echo "Unsuported PHP"
-        exit
-    fi
-
-fi
-
-}
-
 control_version_updater () {
 #Выполняем проверку и контроль версии программы обновлений
 
@@ -352,7 +321,6 @@ $APP_SOCKSTAT -4l|$APP_GREP 2007
 
 
 delete_downloaded_files
-check_php_version
 control_version_updater
 control_version_mikbill
 control_cheksum_mikbill
