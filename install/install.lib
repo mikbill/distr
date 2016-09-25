@@ -87,6 +87,7 @@ docker run -p 2007:2007 -v $dir_root/mikbill/www:/var/www/mikbill \
                         -v $dir_root/mikbill/php-socket:/var/run/php-socket \
                         -v $dir_root/mysql/base:/var/lib/mysql \
                         --name $container_mikbill $mode mikbill/mikbill
+docker exec $container_mikbill chown -R apache:apache /var/www/mikbill
 }
 
 install_nginx (){
