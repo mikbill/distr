@@ -1,4 +1,7 @@
 #!/bin/bash
+/usr/sbin/crond start
+/usr/sbin/php-fpm start
+
 while true
 do
 rm -rf /var/run/mikbill.pid
