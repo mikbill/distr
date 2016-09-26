@@ -21,11 +21,10 @@ RUN pear channel-discover pear.phing.info \
 && pear upgrade \
 && pear -q install phing/phing
 
-RUN yum install -y python-setuptools \
-&& easy_install supervisor \
-&& wget -P /etc https://github.com/mikbill/distr/raw/master/mikbill/init.d/supervisord.conf
+RUN wget https://github.com/mikbill/distr/raw/master/mikbill/init.d/start.sh \
+&& chmod +x start.sh
 
-CMD ["/usr/bin/supervisord"]
+CMD ["./start.sh"]
 
 LABEL version="0.1" \
       name="Mikbill image"
