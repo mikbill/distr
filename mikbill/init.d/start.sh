@@ -1,6 +1,6 @@
 #!/bin/bash
 /usr/sbin/crond start
-/usr/sbin/php-fpm start
+/usr/sbin/php-fpm -D
 
 while true
 do
