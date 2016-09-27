@@ -23,7 +23,7 @@ RUN pear channel-discover pear.phing.info \
 
 RUN wget https://github.com/mikbill/distr/raw/master/mikbill/init.d/start.sh \
 && chmod +x start.sh \
-&& yum install -y which \
+&& yum install -y which mysql \
 && yum clean all 
 
 CMD ["./start.sh"]
