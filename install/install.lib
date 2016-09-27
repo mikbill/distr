@@ -3,7 +3,7 @@ download_mikbill (){
 rm -f $dir_download/mikbill/*
 wget -P $dir_download/mikbill https://github.com/mikbill/distr/raw/master/mikbill/crontab \
                               https://raw.githubusercontent.com/mikbill/distr/master/mikbill/www.conf \
-                              https://github.com/mikbill/distr/raw/master/mikbill/php.ini
+                              https://github.com/mikbill/distr/raw/master/mikbill/php5.4/php.ini
 wget -P $dir_download/mikbill https://github.com/mikbill/distr/raw/master/mikbill/update/mikbill_update.sh
 chmod +x $dir_download/mikbill/mikbill_update.sh
 }
