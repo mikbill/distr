@@ -2,7 +2,6 @@ From centos:7
 EXPOSE 2007
             
 RUN mkdir -p /usr/local/zend /var/www/mikbill /var/run/php-socket /var/lib/php/session \
-&& chown -R apache:apache /var/lib/php \
 && useradd nginx \
 && yum update -y \
 && yum install -y  wget \
