@@ -15,15 +15,16 @@ RUN mkdir -p /usr/local/zend /var/www/mikbill /var/run/php-socket /var/lib/php/s
 
 RUN yum install -y php-cli php-bcmath php-devel php-embedded php-gd php-imap php-mbstring php-mysql php-process \
             php-pspell php-recode php-snmp php-soap php-xml php-xmlrpc php-fpm libdbi-dbd-mysql php-pear \
-&& chown -R apache:apache /var/lib/php \
-&& yum clean all 
+&& chown -R apache:apache /var/lib/php
 
 RUN pear channel-discover pear.phing.info \
 && pear upgrade \
 && pear -q install phing/phing
 
 RUN wget https://github.com/mikbill/distr/raw/master/mikbill/init.d/start.sh \
-&& chmod +x start.sh
+&& chmod +x start.sh \
+&& yum install -y which \
+&& yum clean all 
 
 CMD ["./start.sh"]
 
