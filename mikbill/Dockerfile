@@ -15,6 +15,7 @@ RUN mkdir -p /usr/local/zend /var/www/mikbill /var/run/php-socket /var/lib/php/s
 
 RUN yum install -y php-cli php-bcmath php-devel php-embedded php-gd php-imap php-mbstring php-mysql php-process \
             php-pspell php-recode php-snmp php-soap php-xml php-xmlrpc php-fpm libdbi-dbd-mysql php-pear \
+&& chown -R apache:apache /var/lib/php \
 && yum clean all 
 
 RUN pear channel-discover pear.phing.info \
