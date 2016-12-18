@@ -1,0 +1,4 @@
+wget https://github.com/mikbill/distr/raw/master/nginx/conf.d/00_stat_zaglushka_vhost.conf
+wget https://github.com/mikbill/distr/raw/master/nginx/conf.d/stat_vhost.conf
+wget https://github.com/mikbill/distr/raw/master/nginx/conf.d/admin_vhost.conf
+
