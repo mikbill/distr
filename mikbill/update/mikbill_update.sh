@@ -1,27 +1,23 @@
-#!/bin/bash
+#!/bin/sh
 
 echo "Start UPDATER SOFT!"
 
-VERSION_UPD="131020121779"
+VERSION_UPD="131020121785"
 ARG1=$1
 
-UPDATE_LOGIN="update"
-UPDATE_PASSWORD="upd1355"
-
-UPDATE_URL="http://update253.mikbill.ru/"
+UPDATE_URL="http://update2free.mikbill.ru/"
 UPDATE_FILE="mikbill.tar.gz"
 UPDATE_FILE_CHECKSUM="mikbill_checksum"
 UPDATE_VERSION_UPDATER="mikbill_rev_up"
 UPDATE_VERSION_MIKBILL="mikbill_revision"
 UPDATE_VERSION_MIKBILL_CURRENT="mikbill_current"
-MIKBILL_CONTACT_MESSAGE="У вас закончились обновления вопросы на info@mikbill.ru"
+MIKBILL_CONTACT_MESSAGE="У вас что-то не так. Смотрите форум. http://www.mikbill.ru"
 MIKBILL_PATH_LINUX="/var/www/mikbill"
 MIKBILL_PATH_BSD="/usr/local/www/mikbill"
 MIKBILL_PATH_LINUX_INST="/var/www"
 MIKBILL_PATH_BSD_INST="/usr/local/www"
 MIKBILL_LOG_UPDATE="mikbill_update.log"
 MIKBILL_UPDATE_PROGRAMM="mikbill_update.sh"
-TIME_SERVERS=" ua.pool.ntp.org ru.pool.ntp.org pool.ntp.org"
 
 TEST="0"
 
@@ -36,37 +32,89 @@ APP_GREP=`which grep`
 APP_AWK=`which awk`
 APP_CAT=`which cat`
 APP_RM=`which rm`
+APP_PHP=`which php`
 APP_LSB_RELEASE="111"
-APP_NTPDATE=`which ntpdate`
+APP_SED=`which sed`
 APP_CHMOD=`which chmod`
 APP_CHOWN=`which chown`
 APP_TAR=`which tar`
 APP_DATE=`which date`
 APP_CP=`which cp`
 
+check_php_version () {
+#Проверить версию PHP и изменить ссылку для загрузки
+#подразумевается что уже система нормально установлена
+
+case $SYSTEM in
+Linux)
+    PHPVER=`$APP_PHP -i|$APP_GREP PHP |$APP_GREP Version |$APP_AWK {'print $4'}|$APP_SED 's/\./ /g' |$APP_SED -n 1p |$APP_AWK {'print $2'}`
+    ;;
+FreeBSD)
+    PHPVER=`$APP_PHP -i|$APP_GREP PHP |$APP_GREP Version |$APP_AWK '{print $4}'|$APP_SED 's/\./ /g' |$APP_SED -n 1p |$APP_AWK '{print $2}'`
+    ;;
+esac
+
+if [ "$PHPVER" -eq "2" ];
+then
+    echo "PHP 5.2 detected"
+    UPDATE_URL="http://update2free.mikbill.ru/52/"
+else
+    if [ "$PHPVER" -eq "3" ];
+    then
+	echo "PHP 5.3 detected"
+        UPDATE_URL="http://update2free.mikbill.ru/53/"
+    else
+        if [ "$PHPVER" -eq "4" ];
+	then
+	    echo "PHP 5.4 detected"
+            UPDATE_URL="http://update2free.mikbill.ru/54/"
+	else
+	    echo "Unsuported PHP"
+            exit
+        fi
+    fi
+fi
+
+}
+
 control_version_updater () {
 #Выполняем проверку и контроль версии программы обновлений
 
-$APP_WGET -q --user=$UPDATE_LOGIN --password="$UPDATE_PASSWORD" $UPDATE_URL$UPDATE_VERSION_UPDATER $NULL
+$APP_WGET -q  $UPDATE_URL$UPDATE_VERSION_UPDATER $NULL
+if [ ! -f ./$UPDATE_VERSION_UPDATER ] ; then
+echo "Connection error file $UPDATE_VERSION_UPDATER"
+exit
+fi
+
 VERSION_UPDATER=`$APP_CAT ./$UPDATE_VERSION_UPDATER`
 
 if [ $VERSION_UPDATER -ne $VERSION_UPD ];
 then
+    echo "Detect Update of UPDATER SOFT!"
     $APP_RM -f ./$MIKBILL_UPDATE_PROGRAMM $NULL
     $APP_WGET -q --user=$UPDATE_LOGIN --password="$UPDATE_PASSWORD" $UPDATE_URL$MIKBILL_UPDATE_PROGRAMM $NULL
     $APP_CHMOD a+x ./$MIKBILL_UPDATE_PROGRAMM
+    echo "RUN new version UPDATER SOFT!"
     ./$MIKBILL_UPDATE_PROGRAMM
-    echo "Update UPDATE_PROGRAMM Success"
+    echo "Update of UPDATER SOFT Success!"
     exit
 fi
+echo "NO Update detected for UPDATER SOFT"
 }
 
 control_version_mikbill () {
 #Проверка версии MikBill
 $APP_RM -f ./$UPDATE_VERSION_MIKBILL $NULL
-$APP_WGET -q --user=$UPDATE_LOGIN --password="$UPDATE_PASSWORD" $UPDATE_URL$UPDATE_VERSION_MIKBILL $NULL
+$APP_WGET -q $UPDATE_URL$UPDATE_VERSION_MIKBILL $NULL
+
+if [ ! -f ./$UPDATE_VERSION_MIKBILL ] ; then
+echo "Connection error file $UPDATE_VERSION_MIKBILL"
+exit
+fi
+
 VERSION_MIKBILL=`$APP_CAT ./$UPDATE_VERSION_MIKBILL`
 VERSION_MIKBILL_CURRENT=`$APP_CAT ./$UPDATE_VERSION_MIKBILL_CURRENT`
+
 
 if [ "$ARG1" != "" ]
 then
@@ -78,12 +126,14 @@ then
     if [ $VERSION_MIKBILL -eq $VERSION_MIKBILL_CURRENT ];
     then
 	delete_downloaded_files
-	echo "Version is UP to Date"
+	echo "MikBiLl Version is UP to Date"
 	exit
+    else
+	echo "Have New Version MIkBiLL"
     fi
 else
     $APP_CAT ./$UPDATE_VERSION_MIKBILL > ./$UPDATE_VERSION_MIKBILL_CURRENT
-    echo "version file not found"
+    echo "Version file not found"
     echo "Do current version file"
 fi
 }
@@ -91,9 +141,20 @@ fi
 control_cheksum_mikbill () {
 #Проверка контрольной суммы скачаного обновления
 
-$APP_WGET -q --user=$UPDATE_LOGIN --password="$UPDATE_PASSWORD" $UPDATE_URL$UPDATE_FILE_CHECKSUM $NULL
+$APP_WGET -q $UPDATE_URL$UPDATE_FILE_CHECKSUM $NULL
+if [ ! -f ./$UPDATE_FILE_CHECKSUM ] ; then
+echo "Connection error file $UPDATE_FILE_CHECKSUM"
+exit
+fi
+
 FILE_CHECKSUM=`$APP_CAT ./$UPDATE_FILE_CHECKSUM`
-$APP_WGET -q --user=$UPDATE_LOGIN --password="$UPDATE_PASSWORD" $UPDATE_URL$UPDATE_FILE $NULL
+$APP_WGET -q $UPDATE_URL$UPDATE_FILE $NULL
+if [ ! -f ./$UPDATE_FILE ] ; then
+echo "Connection error file $UPDATE_FILE"
+exit
+fi
+
+
 
 case $SYSTEM in
 Linux)
@@ -108,9 +169,10 @@ esac
 
 if [ "$DOWNLOAD_CHECKSUM" != "$FILE_CHECKSUM" ];
 then
-    echo "Update file Cheksumm error $MIKBILL_CONTACT_MESSAGE "
+    echo "Update file Checksumm error $MIKBILL_CONTACT_MESSAGE "
     exit
 fi
+echo "Checksumm is OK!"
 }
 
 delete_downloaded_files () {
@@ -126,6 +188,8 @@ $APP_RM -f ./mikbill_rev_up.*
 $APP_RM -f ./mikbill_revision.*
 $APP_RM -f ./mikbill_update.sh.*
 $APP_RM -f ./index.php*
+
+echo "Delete downloaded old files success!"
 }
 
 detect_linux () {
@@ -265,7 +329,6 @@ cd $MIKBILL_PATH_LINUX"/admin/sys/update"
 /etc/init.d/radiusd stop $NULL
 $APP_NETSTAT -nlp|$APP_GREP 2007
 /etc/init.d/mikbill stop $NULL
-$APP_NTPDATE $TIME_SERVERS
 sleep 1
 /etc/init.d/mikbill start $NULL
 /etc/init.d/radiusd start $NULL
@@ -282,7 +345,6 @@ cd $MIKBILL_PATH_LINUX"/admin/sys/update"
 /etc/init.d/freeradius stop $NULL
 $APP_NETSTAT -nlp|$APP_GREP 2007
 /etc/init.d/mikbill stop $NULL
-$APP_NTPDATE $TIME_SERVERS
 sleep 1
 /etc/init.d/mikbill start $NULL
 /etc/init.d/freeradius start $NULL
@@ -299,7 +361,6 @@ cd $MIKBILL_PATH_BSD"/admin/sys/update"
 /usr/local/etc/rc.d/radiusd stop $NULL
 $APP_SOCKSTAT -4l|$APP_GREP 2007
 /usr/local/etc/rc.d/mikbill stop $NULL
-$APP_NTPDATE $TIME_SERVERS
 sleep 1
 /usr/local/etc/rc.d/mikbill start $NULL
 /usr/local/etc/rc.d/radiusd start $NULL
@@ -307,7 +368,9 @@ sleep 1
 $APP_SOCKSTAT -4l|$APP_GREP 2007
 }
 
+
 delete_downloaded_files
+check_php_version
 control_version_updater
 control_version_mikbill
 control_cheksum_mikbill
@@ -363,4 +426,3 @@ then
 else
     echo "Update Don't Download $MIKBILL_CONTACT_MESSAGE"
 fi
-
