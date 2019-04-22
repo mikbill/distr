@@ -2,3 +2,6 @@ wget https://github.com/mikbill/distr/raw/master/mikbill/update/mikbill_update.s
 
 Free:
 wget https://github.com/mikbill/distr/raw/master/mikbill/update/free/mikbill_update.sh
+
+C офф сервера
+wget -O mikbill_update.sh http://pay.update.2x.mikbill.pro/mikbill_update.sh
